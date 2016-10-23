@@ -9,11 +9,15 @@
 
 namespace Application\Controller;
 
+use Application\Entity\File;
+use Application\Entity\LocalCenter;
 use Application\Entity\MapLocalization;
 use Application\Entity\StatsSearch;
+use Application\Entity\User;
 use Application\Form\LoginForm;
 use Application\Form\PointForm;
 use Application\Form\RegisterForm;
+use Application\Functions\Generator;
 use Application\Functions\OtherFunctions;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
@@ -32,11 +36,13 @@ class IndexController extends AbstractActionController
     protected $em = null;
     protected $translate;
     protected $otherFunctions;
+    protected $generator;
 
     public function dispatch(\Zend\Stdlib\RequestInterface $request, \Zend\Stdlib\ResponseInterface $response = null)
     {
         $this->em = $this->getServiceLocator()->get('EntityManager');
         $this->otherFunctions = new OtherFunctions();
+        $this->generator = new Generator();
         return parent::dispatch($request, $response);
     }
 
@@ -96,7 +102,6 @@ class IndexController extends AbstractActionController
         $localId = $local2->getId();
 
         if ($this->request->isXmlHttpRequest()) {
-
             if ($params != NULL) {
                 $loc = $this->em->getRepository('Application\Entity\MapLocalization')->getSearch($params, $local2);
             } elseif ($params == NULL) {
@@ -118,7 +123,17 @@ class IndexController extends AbstractActionController
                 }
             }
 
+            if ($this->identity()) {
+                $logger = new \Application\Functions\Logger(date('d-m-Y'), $this->identity(), $this->em, ROOT_PATH . '/logs/search', 'logs/search');
+            } else {
+                $superUser = $this->em->getRepository('Application\Entity\User')->findOneByName('superuser');
+                $logger = new \Application\Functions\Logger(date('d-m-Y'), $superUser, $this->em, ROOT_PATH . '/logs/search', 'logs/search');
+            }
+
             if ($loc) {
+
+                $logger->log('User: ' . $this->identity()->getName() . ' szukane: ' . $params, 1);
+
                 $viewModel = new ViewModel(array(
                     'points' => $loc,
                 ));
@@ -135,6 +150,9 @@ class IndexController extends AbstractActionController
                     'html' => $html,
                 ));
             } else {
+
+                $logger->log('User: ' . $this->identity()->getName() . ' szukane: ' . $params, 0);
+
                 return new JsonModel(array(
                     'message' => array(
                         'type' => 'danger',
@@ -301,5 +319,114 @@ class IndexController extends AbstractActionController
         $this->em->flush();
 
         return new JsonModel();
+    }
+
+    public function initAction() {
+        echo '<p style="color: blue; font-size: 15px; margin-top: 0; margin-bottom: 0">Sprawdzam czy istnieje użytkownik <b>superadmin</b></p><br>';
+        $user = $this->em->getRepository('Application\Entity\User')->findOneByName('superuser');
+        if (!$user) {
+            echo '<p style="color: red; font-size: 15px; margin-top: 0; margin-bottom: 0">Niestety brak takiego użytkownika, muszę go utworzyć...</p><br>';
+            $user = new User();
+            $user->setAddDate(new \DateTime(date('d.m.Y H:i:s')));
+            $user->setLocal(1);
+            $user->setToken($this->generator->string(30));
+            $user->setIsAccepted(1);
+            $user->setName('superuser');
+            $user->setEditDate(new \DateTime(date('d.m.Y H:i:s')));
+            $user->setIsAdmin(1);
+            $user->setEmail('admin@mleczkop.nazwa.pl');
+
+            $this->em->persist($user);
+            $this->em->flush();
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Użytkownik utworzony</p><br>';
+        } else {
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Użytkownik istnieje</p><br>';
+        }
+        echo '<hr>';
+        echo '<p style="color: blue; font-size: 15px; margin-top: 0; margin-bottom: 0">Sprawdzam czy w bazie istnieje folder <b>ROOT</b></p><br>';
+        $root = $this->em->getRepository('Application\Entity\File')->findOneByName('ROOT');
+        if (!$root) {
+            echo '<p style="color: red; font-size: 15px; margin-top: 0; margin-bottom: 0">Folder nie istnieje</p><br>';
+            $root = new File();
+            $root->setName('ROOT');
+            $root->setAuthor($user);
+            $root->setDateAdd(new \DateTime(date('d.m.Y H:i:s')));
+            $root->setHash($this->generator->string(30));
+            $root->setPath(ROOT_PATH);
+            $root->setParent(NULL);
+            $root->setIsFile(false);
+
+            $this->em->persist($root);
+            $this->em->flush();
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Folder utworzony</p><br>';
+        } else {
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Folder istnieje</p><br>';
+        }
+
+        $this->checkCatalog('logs', $root, $user, ROOT_PATH . '/logs');
+        $this->checkCatalog('avatar_files', $root, $user, ROOT_PATH . '/avatar_files');
+        $this->checkCatalog('csv_files', $root, $user, ROOT_PATH . '/csv_files');
+        $this->checkCatalog('logs/points', $root, $user, ROOT_PATH . '/logs/points');
+        $this->checkCatalog('logs/search', $root, $user, ROOT_PATH . '/logs/search');
+        $this->checkCatalog('logs/users', $root, $user, ROOT_PATH . '/logs/users');
+        echo '<hr>';
+        echo '<p style="color: blue; font-size: 15px; margin-top: 0; margin-bottom: 0">Sprawdzam czy w został przekazany parametr nazwy miasta</p><br>';
+        $town = $this->params()->fromRoute('town');
+        if ($town) {
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Został przekazany parametr <b>' . $town . '</b></p><br>';
+        } else {
+            echo '<p style="color: orange; font-size: 15px; margin-top: 0; margin-bottom: 0">Nie został przekazany parametr, domyślna wartość <b>Kraków</b></p><br>';
+            $town = 'Kraków';
+        }
+        echo '<p style="color: blue; font-size: 15px; margin-top: 0; margin-bottom: 0">Sprawdzam czy w bazie istnieje miasto <b>' . $town . '</b></p><br>';
+        $dbTown = $this->em->getRepository('Application\Entity\LocalCenter')->findOneByShowName($town);
+        if (!$dbTown) {
+            echo '<p style="color: red; font-size: 15px; margin-top: 0; margin-bottom: 0">Niestety brak takiego miasta, muszę go utworzyć...</p><br>';
+            $dbTown = new LocalCenter();
+            $dbTown->setLat(50.061596);
+            $dbTown->setLon(19.937318);
+            $dbTown->setName(strtolower(strtr($town, 'ĘÓĄŚŁŻŹĆŃęóąśłżźćń', 'EOASLZZCNeoaslzzcn')));
+            $dbTown->setShowName($town);
+
+            $this->em->persist($dbTown);
+            $this->em->flush();
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Utworzone miasto <b>' . $town . '</b></p><br>';
+        } else {
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Miasto instnieje</p><br>';
+        }
+
+        die;
+    }
+
+    private function checkCatalog($name, $parent, $user, $path) {
+        echo '<hr>';
+        echo '<p style="color: blue; font-size: 15px; margin-top: 0; margin-bottom: 0">Sprawdzam czy istnieje katalog <b>' . $name . '</b></p><br>';
+        $file = $this->em->getRepository('Application\Entity\File')->findOneByName($name);
+        if (!$file || !file_exists($name)) {
+            echo '<p style="color: red; font-size: 15px; margin-top: 0; margin-bottom: 0">Folder nie istnieje</p><br>';
+            if (!$file) {
+                echo '<p style="color: red; font-size: 15px; margin-top: 0; margin-bottom: 0">Nie istnieje w bazie</p><br>';
+                $file = new File();
+                $file->setName($name);
+                $file->setPath($path);
+                $file->setParent($parent);
+                $file->setAuthor($user);
+                $file->setDateAdd(new \DateTime(date('d.m.Y H:i:s')));
+                $file->setIsFile(false);
+                $file->setHash($this->generator->string(30));
+
+                $this->em->persist($file);
+                $this->em->flush();
+                echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Utworzyłem katalog w bazie</p><br>';
+            }
+            if (!file_exists($path)) {
+                echo '<p style="color: red; font-size: 15px; margin-top: 0; margin-bottom: 0">Folder nie istnieje na dysku</p><br>';
+                mkdir($path);
+                chmod($path, 0777);
+                echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Utworzyłem katalog na dysku</p><br>';
+            }
+        } else {
+            echo '<p style="color: green; font-size: 15px; margin-top: 0; margin-bottom: 0">Katalog instnieje</p><br>';
+        }
     }
 }

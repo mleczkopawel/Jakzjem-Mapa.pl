@@ -84,6 +84,7 @@ class Module
             'Application\Controller\Index-getByLocale',
             'Application\Controller\Index-getPoint',
             'Application\Controller\Index-setToSession',
+            'Application\Controller\Index-init',
 //            AUTH-FRONT
             'Application\Controller\Auth-callbackGoogle',
             'Application\Controller\Auth-callbackFacebook',

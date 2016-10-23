@@ -237,8 +237,8 @@ class AuthController extends AbstractActionController
             $user->setLocal(1);
             $user->setAddDate(new \DateTime(date('d.m.Y H:i:s')));
 
-//            $this->em->persist($user);
-//            $this->em->flush();
+            $this->em->persist($user);
+            $this->em->flush();
 
             $mail = new Message();
             $mail->setEncoding("UTF-8");
@@ -247,7 +247,7 @@ class AuthController extends AbstractActionController
                 ->addTo($data['email'])
                 ->setSubject('Witamy');
             $transport = new Sendmail('admin@mleczkop.nazwa.pl');
-            $transport->send($mail);
+//            $transport->send($mail);
 
             $response = array(
                 'code' => 1,
@@ -302,5 +302,14 @@ class AuthController extends AbstractActionController
         $response['auth'] = $auth;
 
         return new JsonModel($response);
+    }
+
+    private function host()
+    {
+        $host = $_SERVER['HTTP_HOST'];
+        $path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $baseurl = "http://" . $host . $path . "/";
+
+        return $baseurl;
     }
 }

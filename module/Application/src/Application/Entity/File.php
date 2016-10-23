@@ -30,6 +30,12 @@ class File
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\Entity\File")
+     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     */
+    private $parent;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Application\Entity\User")
      * @ORM\JoinColumn(name="author", referencedColumnName="id")
      */
@@ -62,6 +68,13 @@ class File
      * @ORM\Column(name="hash", type="string", nullable=false)
      */
     private $hash;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_file", type="boolean", nullable=false)
+     */
+    private $isFile;
 
     /**
      * @return int
@@ -168,6 +181,42 @@ class File
     public function setHash($hash)
     {
         $this->hash = $hash;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     * @return File
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsFile()
+    {
+        return $this->isFile;
+    }
+
+    /**
+     * @param boolean $isFile
+     * @return File
+     */
+    public function setIsFile($isFile)
+    {
+        $this->isFile = $isFile;
         return $this;
     }
 

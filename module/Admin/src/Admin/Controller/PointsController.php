@@ -84,7 +84,7 @@ class PointsController extends AbstractActionController
     {
         $fileFunctions = new OtherFunctions();
         $logger = new Logger();
-        $write = new Stream('./logs/points_logs.log');
+        $write = new Stream('./logs/points/' . date('d/m/Y') . '.log');
         $logger->addWriter($write);
         $files = $this->params()->fromFiles();
         $date = date('d.m.Y h:i:s');
@@ -145,6 +145,8 @@ class PointsController extends AbstractActionController
             $file->setDateAdd(new \DateTime($date));
             $file->setHash($hash);
             $file->setPath($path);
+            $file->setIsFile(true);
+            $file->setParent($this->em->getRepository('Application\Entity\File')->findOneByName('csv_files'));
 
             $this->em->persist($file);
             $this->em->flush();

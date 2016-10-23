@@ -110,6 +110,16 @@ return array(
                             ),
                         ),
                     ),
+                    'init' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/init[/:town]',
+                            'defaults' => array(
+                                'controller' => 'Index',
+                                'action' => 'init',
+                            ),
+                        ),
+                    ),
                     'auth' => array(
                         'type' => 'Literal',
                         'options' => array(
