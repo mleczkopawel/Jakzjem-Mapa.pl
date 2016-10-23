@@ -1,0 +1,634 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZendSkeletonApplication\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-06 14:52+0200\n"
+"PO-Revision-Date: 2016-10-06 14:52+0200\n"
+"Last-Translator: Łukasz Rodziewicz <lukasz@rodziewicz.com.pl>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../Application/src/Application/Controller/AuthController.php:256
+#: ../Application/src/Application/Controller/AuthController.php:288
+msgid "Success!"
+msgstr "Udało się!"
+
+#: ../Application/src/Application/Controller/AuthController.php:257
+msgid "To given email address was sent an activation link."
+msgstr "Na podany e-mail adres został wysłany link aktywacyjny."
+
+#: ../Application/src/Application/Controller/AuthController.php:265
+#: ../Application/src/Application/Controller/AuthController.php:296
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:143
+msgid "ERROR!"
+msgstr "Błąd!"
+
+#: ../Application/src/Application/Controller/AuthController.php:266
+msgid "Not correct values."
+msgstr "Nie poprawne wartości."
+
+#: ../Application/src/Application/Controller/AuthController.php:289
+msgid "Able to login"
+msgstr "Zalogowano"
+
+#: ../Application/src/Application/Controller/AuthController.php:297
+msgid "Unable to login"
+msgstr "Nie można się zalogować."
+
+#: ../Application/src/Application/Controller/IndexController.php:130
+msgid "Yey!"
+msgstr "Tak!"
+
+#: ../Application/src/Application/Controller/IndexController.php:131
+msgid "I can find"
+msgstr "Znalazłem"
+
+#: ../Application/src/Application/Controller/IndexController.php:141
+msgid "Bad!"
+msgstr "Nie!"
+
+#: ../Application/src/Application/Controller/IndexController.php:142
+msgid "I can't find"
+msgstr "Nie mogę odszukać"
+
+#: ../Application/src/Application/Controller/IndexController.php:152
+msgid "I do not nothing..."
+msgstr "Ja nic nie robię"
+
+#: ../Admin/view/admin/auth/login.phtml:2
+#: ../Admin/view/admin/auth/register.phtml:12
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:1
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:12
+msgid "Login"
+msgstr "Zaloguj"
+
+#: ../Admin/view/admin/auth/login.phtml:15
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:14
+msgid "Login/e-mail"
+msgstr "Login/e-mail"
+
+#: ../Admin/view/admin/auth/login.phtml:18
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:17
+msgid "User not does exist"
+msgstr "Użytkownik nie istnieje"
+
+#: ../Admin/view/admin/auth/login.phtml:25
+#: ../Admin/view/admin/auth/register.phtml:37
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:24
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:36
+msgid "Password"
+msgstr "Hasło"
+
+#: ../Admin/view/admin/auth/login.phtml:38
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:34
+msgid "Sign in with Google"
+msgstr "Zaloguj się za pomocą Google"
+
+#: ../Admin/view/admin/auth/login.phtml:47
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:40
+msgid "Sign in with Facebook"
+msgstr "Zaloguj się przez Facebooka"
+
+#: ../Admin/view/admin/auth/login.phtml:65
+#: ../Admin/view/admin/auth/register.phtml:70
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:58
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:70
+msgid "Exists user"
+msgstr "Użytkownik istnieje"
+
+#: ../Admin/view/admin/auth/login.phtml:69
+#: ../Admin/view/admin/auth/register.phtml:74
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:62
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:74
+msgid "User not exists"
+msgstr "Użytkownik nie istnieje"
+
+#: ../Admin/view/admin/auth/register.phtml:15
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:14
+msgid "User exists"
+msgstr "Użytkownik istnieje"
+
+#: ../Admin/view/admin/auth/register.phtml:20
+#: ../Admin/view/admin/users/index.phtml:6
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:19
+msgid "Email"
+msgstr "Email"
+
+#: ../Admin/view/admin/auth/register.phtml:24
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:23
+msgid "Email exists"
+msgstr "Email istnieje"
+
+#: ../Admin/view/admin/auth/register.phtml:29
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:28
+msgid "Confirm Email"
+msgstr "Potwierdź email"
+
+#: ../Admin/view/admin/auth/register.phtml:45
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:44
+msgid "Confirm Password"
+msgstr "Potwierdź hasło"
+
+#: ../Admin/view/admin/auth/register.phtml:96
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:95
+msgid "Exists email"
+msgstr "Email istnieje"
+
+#: ../Admin/view/admin/auth/register.phtml:100
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:99
+msgid "Email not exists"
+msgstr "Email nie istnieje"
+
+#: ../Admin/view/admin/index/export.phtml:4
+#: ../Admin/view/admin/index/profile-settings.phtml:4
+#: ../Admin/view/admin/index/settings.phtml:4
+#: ../Admin/view/admin/index/users.phtml:5
+#: ../Admin/view/admin/points/show-all.phtml:18
+#: ../Admin/view/admin/stats/index.phtml:23
+#: ../Admin/view/admin/users/index.phtml:87
+msgid "You are in: "
+msgstr "Jesteś w: "
+
+#: ../Admin/view/admin/points/edit.phtml:11
+#: ../Admin/view/admin/points/import-frame.phtml:19
+#: ../Admin/view/admin/points/partial/table-partial.phtml:5
+#: ../Admin/view/admin/users/index.phtml:5
+#: ../Application/view/application/index/index.phtml:368
+#: ../Application/view/application/index/partial/add-partial.phtml:12
+#: ../Application/view/application/index/partial/checked-partial.phtml:6
+#: ../Application/view/application/index/partial/found-partial.phtml:4
+msgid "Name"
+msgstr "Nazwa"
+
+#: ../Admin/view/admin/points/edit.phtml:18
+#: ../Application/view/application/index/partial/add-partial.phtml:19
+msgid "Nazwa"
+msgstr "Nazwa"
+
+#: ../Admin/view/admin/points/edit.phtml:22
+#: ../Admin/view/admin/points/edit.phtml:29
+msgid "Lat"
+msgstr "Lat"
+
+#: ../Admin/view/admin/points/edit.phtml:33
+#: ../Admin/view/admin/points/edit.phtml:40
+msgid "Lon"
+msgstr "Lon"
+
+#: ../Admin/view/admin/points/edit.phtml:44
+#: ../Admin/view/admin/points/edit.phtml:51
+msgid "Data small"
+msgstr "Mały opis"
+
+#: ../Admin/view/admin/points/edit.phtml:55
+#: ../Admin/view/admin/points/edit.phtml:62
+msgid "Data big"
+msgstr "Duży opis"
+
+#: ../Admin/view/admin/points/edit.phtml:66
+#: ../Admin/view/admin/points/edit.phtml:73
+#: ../Application/view/application/index/partial/add-partial.phtml:29
+#: ../Application/view/application/index/partial/add-partial.phtml:36
+msgid "Tags"
+msgstr "Tagi"
+
+#: ../Admin/view/admin/points/edit.phtml:77
+#: ../Admin/view/admin/points/edit.phtml:84
+msgid "Vote"
+msgstr "Ocena"
+
+#: ../Admin/view/admin/points/edit.phtml:88
+#: ../Admin/view/admin/points/edit.phtml:95
+#: ../Admin/view/admin/points/partial/table-partial.phtml:6
+#: ../Application/view/application/index/partial/add-partial.phtml:40
+#: ../Application/view/application/index/partial/add-partial.phtml:47
+msgid "Adres"
+msgstr "Adres"
+
+#: ../Admin/view/admin/points/edit.phtml:99
+#: ../Admin/view/admin/points/partial/table-partial.phtml:7
+#: ../Application/view/application/index/partial/add-partial.phtml:51
+msgid "URL"
+msgstr "URL"
+
+#: ../Admin/view/admin/points/edit.phtml:106
+#: ../Application/view/application/index/partial/add-partial.phtml:58
+msgid "Url"
+msgstr "URL"
+
+#: ../Admin/view/admin/points/edit.phtml:110
+#: ../Admin/view/admin/points/edit.phtml:117
+#: ../Admin/view/admin/points/partial/table-partial.phtml:8
+#: ../Application/view/application/index/partial/add-partial.phtml:62
+#: ../Application/view/application/index/partial/add-partial.phtml:69
+#: ../Application/view/application/index/partial/checked-partial.phtml:10
+msgid "Phone"
+msgstr "Telefon"
+
+#: ../Admin/view/admin/points/import-frame.phtml:4
+msgid "Add new file from drive"
+msgstr "Dodaj nowy plik z dysku"
+
+#: ../Admin/view/admin/points/import-frame.phtml:6
+msgid "Select file"
+msgstr "Wybierz plik"
+
+#: ../Admin/view/admin/points/import-frame.phtml:20
+msgid "Size"
+msgstr "Rozmiar"
+
+#: ../Admin/view/admin/points/import-frame.phtml:22
+msgid "Good"
+msgstr "Dobre"
+
+#: ../Admin/view/admin/points/import-frame.phtml:24
+msgid "Bad"
+msgstr "Złe"
+
+#: ../Admin/view/admin/points/import-frame.phtml:36
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:52
+#: ../Application/view/application/index/partial/add-partial.phtml:79
+msgid "Close"
+msgstr "Zamknij"
+
+#: ../Admin/view/admin/points/partial/list-partial.phtml:30
+#: ../Admin/view/admin/points/partial/list-partial.phtml:32
+#: ../Admin/view/admin/users/index.phtml:54
+#: ../Admin/view/admin/users/index.phtml:56
+msgid "Edit"
+msgstr "Edytuj"
+
+#: ../Admin/view/admin/points/partial/list-partial.phtml:37
+#: ../Admin/view/admin/points/partial/list-partial.phtml:39
+#: ../Admin/view/admin/users/index.phtml:61
+#: ../Admin/view/admin/users/index.phtml:63
+msgid "Deactivate"
+msgstr "Deaktywuj"
+
+#: ../Admin/view/admin/points/partial/list-partial.phtml:44
+#: ../Admin/view/admin/points/partial/list-partial.phtml:46
+#: ../Admin/view/admin/users/index.phtml:68
+#: ../Admin/view/admin/users/index.phtml:70
+msgid "Activate"
+msgstr "Aktywuj"
+
+#: ../Admin/view/admin/points/partial/list-partial.phtml:51
+#: ../Admin/view/admin/points/partial/list-partial.phtml:53
+#: ../Admin/view/admin/users/index.phtml:75
+#: ../Admin/view/admin/users/index.phtml:77
+msgid "Delete"
+msgstr "Usuń"
+
+#: ../Admin/view/admin/points/partial/list-partial.phtml:61
+#: ../Admin/view/admin/points/partial/up-table-upload.phtml:13
+#: ../Application/view/application/index/index.phtml:368
+#: ../Application/view/application/index/index.phtml:369
+#: ../Application/view/application/index/partial/found-partial.phtml:12
+msgid "Nothing"
+msgstr "Nic nie ma"
+
+#: ../Admin/view/admin/points/partial/table-partial.phtml:9
+#: ../Admin/view/admin/users/index.phtml:7
+msgid "Add date"
+msgstr "Data dodania"
+
+#: ../Admin/view/admin/points/partial/table-partial.phtml:10
+#: ../Admin/view/admin/users/index.phtml:8
+msgid "Edit date"
+msgstr "Data edycji"
+
+#: ../Admin/view/admin/points/partial/table-partial.phtml:11
+msgid "Is active"
+msgstr "Aktywne"
+
+#: ../Admin/view/admin/points/show-all.phtml:1
+msgid "Points"
+msgstr "Punkty"
+
+#: ../Admin/view/admin/points/show-all.phtml:4
+msgid "Add new points from CSV file"
+msgstr "Dodaj nowy punkt z pliku CSV"
+
+#: ../Admin/view/admin/points/show-all.phtml:6
+msgid "Click to import csv file and import points to map."
+msgstr "Kliknij, aby zaimportować plik csv i importować punkty na mapie."
+
+#: ../Admin/view/admin/stats/index.phtml:5
+msgid "Search name"
+msgstr "Szukana nazwa"
+
+#: ../Admin/view/admin/stats/index.phtml:6
+msgid "Count"
+msgstr "Liczba"
+
+#: ../Admin/view/admin/users/index.phtml:9
+msgid "Is admin"
+msgstr "Admin"
+
+#: ../Admin/view/admin/users/index.phtml:10
+msgid "Is accepted"
+msgstr "Zaakceptowany"
+
+#: ../Admin/view/admin/users/index.phtml:11
+msgid "Providers"
+msgstr "Dostawcy"
+
+#: ../Admin/view/admin/users/index.phtml:23
+msgid "Not edited"
+msgstr "Nie edytowany"
+
+#: ../Admin/view/layout/iframe.phtml:8 ../Admin/view/layout/layout.phtml:8
+#: ../Admin/view/layout/login.phtml:6
+#: ../Application/view/application/index/index.phtml:26
+#: ../Application/view/layout/layout.phtml:9
+msgid "Bars"
+msgstr "Knajpy"
+
+#: ../Admin/view/layout/layout.phtml:46
+msgid "Export to CSV"
+msgstr "Eksportuj do CSV"
+
+#: ../Admin/view/layout/layout.phtml:47
+msgid "User managment"
+msgstr "Zarządzanie użytkownikami"
+
+#: ../Admin/view/layout/layout.phtml:49
+msgid "Profile settings"
+msgstr "Ustawienia profilu"
+
+#: ../Admin/view/layout/layout.phtml:51
+msgid "Statistics"
+msgstr "Statystyki"
+
+#: ../Admin/view/layout/layout.phtml:52
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: ../Admin/view/layout/layout.phtml:53
+msgid "Show all"
+msgstr "Pokaż wszystkie"
+
+#: ../Admin/view/layout/layout.phtml:58
+#: ../Application/view/application/index/partial/account-partials/loged-partial.phtml:17
+msgid "Logout"
+msgstr "Wyloguj"
+
+#: ../Admin/view/layout/layout.phtml:60
+msgid "Go to front"
+msgstr "Przejdź do przodu"
+
+#: ../Admin/view/layout/layout.phtml:84 ../Admin/view/layout/login.phtml:59
+#: ../Application/view/layout/layout.phtml:73
+msgid "Hello"
+msgstr "Witaj"
+
+#: ../Admin/view/layout/layout.phtml:85
+msgid "Hello in management panel"
+msgstr "Witaj w panelu zarządzania"
+
+#: ../Admin/view/layout/login.phtml:60
+msgid "You must login to explore the panel"
+msgstr "Musisz się zalogować do przeglądania panelu"
+
+#: ../Application/view/application/index/index.phtml:12
+#: ../Application/view/application/index/index.phtml:358
+msgid "What are you looking for hungry person"
+msgstr "Czego szukasz głodny człowieku"
+
+#: ../Application/view/application/index/index.phtml:15
+msgid "Type here anything what you want, maybe sth will found."
+msgstr "Wpisz tutaj wszystko to, co chcesz, być może znajdziesz to czego szukasz."
+
+#: ../Application/view/application/index/index.phtml:20
+msgid "Search"
+msgstr "Szukaj"
+
+#: ../Application/view/application/index/index.phtml:22
+msgid "Clear"
+msgstr "Wyczyść"
+
+#: ../Application/view/application/index/index.phtml:152
+#: ../Application/view/application/index/index.phtml:157
+#: ../Application/view/application/index/index.phtml:294
+#: ../Application/view/application/index/index.phtml:300
+msgid "You are in here"
+msgstr "Jesteś tutaj"
+
+#: ../Application/view/application/index/index.phtml:197
+msgid "Add to map"
+msgstr "Dodaj do mapy"
+
+#: ../Application/view/application/index/index.phtml:362
+msgid "I've cleared all"
+msgstr "Wyczyściłem wszystko"
+
+#: ../Application/view/application/index/index.phtml:368
+#: ../Application/view/application/index/partial/found-partial.phtml:5
+msgid "Street"
+msgstr "Ulica"
+
+#: ../Application/view/application/index/partial/account-partials/login-partial.phtml:42
+msgid "Register"
+msgstr "Zarejestruj"
+
+#: ../Application/view/application/index/partial/account-partials/register-partial.phtml:144
+msgid "Please complete all fields."
+msgstr "Uzupełnij wszystkie pola."
+
+#: ../Application/view/application/index/partial/add-partial.phtml:3
+msgid "Add new point"
+msgstr "Dodaj nowy punkt"
+
+#: ../Application/view/application/index/partial/add-partial.phtml:76
+msgid "Send"
+msgstr "Wyślij"
+
+#: ../Application/view/application/index/partial/checked-partial.phtml:3
+msgid "Nothing found"
+msgstr "Nic nie ma"
+
+#: ../Application/view/application/index/partial/checked-partial.phtml:8
+msgid "Adress"
+msgstr "Adres"
+
+#: ../Application/view/application/index/partial/checked-partial.phtml:14
+msgid "Go to site"
+msgstr "Przejdź do witryny"
+
+#: ../Application/view/application/index/partial/checked-partial.phtml:17
+msgid "Lead by"
+msgstr "Prowadzić przez"
+
+#: ../Application/view/application/index/partial/tabs-partial.phtml:4
+msgid "Account"
+msgstr "Konto"
+
+#: ../Application/view/application/index/partial/tabs-partial.phtml:6
+msgid "Found"
+msgstr "Znalezione"
+
+#: ../Application/view/application/index/partial/tabs-partial.phtml:8
+msgid "Checked"
+msgstr "Zaznaczone"
+
+#: ../Application/view/error/404.phtml:1
+msgid "A 404 error occurred"
+msgstr "Wystąpił błąd 404"
+
+#: ../Application/view/error/404.phtml:10
+msgid "The requested controller was unable to dispatch the request."
+msgstr "Żądany kontroler nie mógł zmapować żądania."
+
+#: ../Application/view/error/404.phtml:13
+msgid "The requested controller could not be mapped to an existing controller class."
+msgstr "Żądany kontroler nie mógł być zmapowany na isteniejącą klasę kontrolera."
+
+#: ../Application/view/error/404.phtml:16
+msgid "The requested controller was not dispatchable."
+msgstr "Żądany kontroler nie mógł zostać zmapowany."
+
+#: ../Application/view/error/404.phtml:19
+msgid "The requested URL could not be matched by routing."
+msgstr "Żądany adres URL nie mógł zostać powiązany z routing'iem."
+
+#: ../Application/view/error/404.phtml:22
+msgid "We cannot determine at this time why a 404 was generated."
+msgstr "Nie możemy określić tym razem dlaczego wygenerowano błąd 404."
+
+#: ../Application/view/error/404.phtml:34
+msgid "Controller"
+msgstr "Kontroler"
+
+#: ../Application/view/error/404.phtml:41
+#, php-format
+msgid "resolves to %s"
+msgstr "rozwiązuje na %s"
+
+#: ../Application/view/error/404.phtml:53
+#: ../Application/view/error/index.phtml:8
+msgid "Additional information"
+msgstr "Dodatkowe informacje"
+
+#: ../Application/view/error/404.phtml:56
+#: ../Application/view/error/404.phtml:82
+#: ../Application/view/error/index.phtml:11
+#: ../Application/view/error/index.phtml:38
+msgid "File"
+msgstr "Plik"
+
+#: ../Application/view/error/404.phtml:61
+#: ../Application/view/error/404.phtml:87
+#: ../Application/view/error/index.phtml:16
+#: ../Application/view/error/index.phtml:43
+msgid "Message"
+msgstr "Komunikat"
+
+#: ../Application/view/error/404.phtml:65
+#: ../Application/view/error/404.phtml:91
+#: ../Application/view/error/index.phtml:20
+#: ../Application/view/error/index.phtml:48
+msgid "Stack trace"
+msgstr "Stack trace"
+
+#: ../Application/view/error/404.phtml:76
+#: ../Application/view/error/index.phtml:32
+msgid "Previous exceptions"
+msgstr "Poprzedni wyjątek"
+
+#: ../Application/view/error/404.phtml:111
+#: ../Application/view/error/index.phtml:69
+msgid "No Exception available"
+msgstr "Brak dostępnego wyjątku"
+
+#: ../Application/view/error/index.phtml:1
+msgid "An error occurred"
+msgstr "Wystąpił błąd"
+
+#: ../Application/view/layout/layout.phtml:74
+msgid "In here you can find anything what you need about any bar"
+msgstr "Tutaj możesz znaleźć wszystko czego potrzebujesz związanego z każdą knajpą"
+
+#~ msgid "Sth went wrong"
+#~ msgstr "Coś poszło nie tak"
+
+#~ msgid "Import from CSV"
+#~ msgstr "Importuj z CSV"
+
+#~ msgid "Get yours localization"
+#~ msgstr "Pobierz swoją lokalizację"
+
+#~ msgid "Show"
+#~ msgstr "Zobacz"
+
+#~ msgid "Advanced"
+#~ msgstr "Zaawansowane"
+
+#~ msgid "I can't find <b>'"
+#~ msgstr "Nie mogę odszukać"
+
+#~ msgid "I can find <b>'"
+#~ msgstr "Znalazłem"
+
+#~ msgid "I can find <b>"
+#~ msgstr "Znalazłem"
+
+#~ msgid "I can't find '<b>"
+#~ msgstr "Nie mogę odszukać"
+
+#~ msgid "In here you can find anything about eat"
+#~ msgstr "Tutaj możesz znaleźć wszystko czego potrzebujesz związanego z każdą knajpą"
+
+#~ msgid "Skeleton Application"
+#~ msgstr "Szkielet Aplikacji"
+
+#~ msgid "Home"
+#~ msgstr "Strona startowa"
+
+#~ msgid "All rights reserved."
+#~ msgstr "Wszelkie prawa zastrzeżone."
+
+#~ msgid "Welcome to %sZend Framework 2%s"
+#~ msgstr "Witaj w %sZend Framework 2%s"
+
+#~ msgid "Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2."
+#~ msgstr "Gratulacje! Z powodzeniem zainstalowałeś %sZF2 Skeleton Application%s. Aktualnie używasz Zend Framework w wersji %s. Ten szkielet może służyć jak prosty punkt startowy do budowy Twoich aplikacji na ZF2."
+
+#~ msgid "Fork Zend Framework 2 on GitHub"
+#~ msgstr "Forkuj Zend Framework 2 na GitHub'e"
+
+#~ msgid "Follow Development"
+#~ msgstr "Śledź prace programistyczne"
+
+#~ msgid "Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!"
+#~ msgstr "Zend Framework 2 jest w trakcie aktywnych prac programistycznych. Jeśli jesteś zainteresowany śledzeniem jego rozwoju, istnieje specialny portal ZF2 na oficjalnej stronie Zend Framework na którym dostępne są linki do ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, oraz wiele więcej. Jest to świetne miejsce by śledzić najnowsze zmiany!"
+
+#~ msgid "ZF2 Development Portal"
+#~ msgstr "ZF2 Development Portal"
+
+#~ msgid "Discover Modules"
+#~ msgstr "Odkryj Moduły"
+
+#~ msgid "The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2."
+#~ msgstr "Społeczność pracuje nad stworzeniem społecznościowego serwisu który posłuży jako repozytorium i galeria dla modułów ZF2. Projekt wkrótce będzie dostępny na %son GitHub%s. Ta strona jest aktualnie online i udostępnia listę niektórych modułów dostępnych dla ZF2."
+
+#~ msgid "Explore ZF2 Modules"
+#~ msgstr "Odkryj Moduły ZF2"
+
+#~ msgid "Help &amp; Support"
+#~ msgstr "Pomoc &amp; Wsparcie"
+
+#~ msgid "If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s."
+#~ msgstr "Jeśli potrzebujesz jakiejkolwiek pomocy lub wsparcia podczas programowania na ZF2, możesz skontaktować się z nami via IRC: %s#zftalk w sieci Freenode%s. Z przyjemnością wysłuchamy wszelkich pytań lub sugestii które możesz mieć odnoście wydań beta. Alternatywnie, możesz zapisać się i wysłać pytanie na %smailing lists%s."
+
+#~ msgid "Ping us on IRC"
+#~ msgstr "Wyślij nam wiadomość na IRC"
+
+#~ msgid "Exception"
+#~ msgstr "Wyjątek"

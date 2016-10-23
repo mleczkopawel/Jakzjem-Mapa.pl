@@ -1,0 +1,64 @@
+<?php if (count($this->points) > 0): ?>
+    <?php
+    $i = (($this->page - 1) * $this->limit);
+    foreach ($this->points as $point):
+        ?>
+        <tr>
+            <td><?php echo ++$i; ?></td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $point->getNazwa() ?></td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $point->getAdres() . ', ' . $point->getTown()->getShowName() ?></td>
+            <td class="mdl-data-table__cell--non-numeric">
+                <a id="url<?php echo $i ?>" class="pawel-a-td" href="<?php echo $point->getUrl() ?>">Przejdź pod adres
+                    <div class="mdl-tooltip" data-mdl-for="url<?php echo $i ?>">
+                        <?php echo $point->getUrl() ?>
+                    </div>
+                </a>
+            </td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $point->getTelephone() ?></td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $point->getDateAdd()->format('d-m-y H:i') ?></td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $point->getDateEdit() ? $point->getDateEdit()->format('d-m-y H:i') : '' ?></td>
+            <td class="mdl-data-table__cell--non-numeric">
+                <?php if ($point->getIsActive() == 1): ?>
+                    <i class="material-icons mdl-color-text--green">done</i>
+                <?php else: ?>
+                    <i class="material-icons mdl-color-text--red">clear</i>
+                <?php endif; ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url('admin/points/edit', array('id' => $point->getIdLoc())) ?>"
+                   id="edit<?php echo $i ?>"
+                   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary"><?php echo $this->translate('Edit', 'default', $_SESSION['translate']); ?></a>
+                <div class="mdl-tooltip" data-mdl-for="edit<?php echo $i ?>">
+                    <?php echo $this->translate('Edit', 'default', $_SESSION['translate']); ?>
+                </div>
+                <?php if ($point->getIsActive() == 1): ?>
+                    <a href="<?php echo $this->url('admin/points/deactivate', array('id' => $point->getIdLoc())) ?>"
+                       id="deactivate<?php echo $i; ?>"
+                       class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent js-deactivate"><?php echo $this->translate('Deactivate', 'default', $_SESSION['translate']); ?></a>
+                    <div class="mdl-tooltip" data-mdl-for="deactivate<?php echo $i ?>">
+                        <?php echo $this->translate('Deactivate', 'default', $_SESSION['translate']); ?>
+                    </div>
+                <?php else: ?>
+                    <a href="<?php echo $this->url('admin/points/deactivate', array('id' => $point->getIdLoc())) ?>"
+                       id="activate<?php echo $i; ?>"
+                       class="mdl-button disabled is-disabled mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--green mdl-color-text--white js-deactivate"><?php echo $this->translate('Activate', 'default', $_SESSION['translate']); ?></a>
+                    <div class="mdl-tooltip" data-mdl-for="activate<?php echo $i ?>">
+                        <?php echo $this->translate('Activate', 'default', $_SESSION['translate']); ?>
+                    </div>
+                <?php endif; ?>
+                <a href="<?php echo $this->url('admin/points/delete', array('id' => $point->getIdLoc())) ?>"
+                   id="delete<?php echo $i ?>"
+                   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--red mdl-color-text--white js-delete"><?php echo $this->translate('Delete', 'default', $_SESSION['translate']); ?></a>
+                <div class="mdl-tooltip" data-mdl-for="delete<?php echo $i ?>">
+                    <?php echo $this->translate('Delete', 'default', $_SESSION['translate']); ?>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php else: ?>
+    <tr>
+        <td colspan="8"><h5 class="text-center"
+                            style="text-align: center"><?php echo $this->translate("Nothing", 'default', $_SESSION['translate']); ?></h5>
+        </td>
+    </tr>
+<?php endif; ?>

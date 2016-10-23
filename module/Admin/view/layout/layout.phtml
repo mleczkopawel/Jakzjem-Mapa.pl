@@ -1,0 +1,91 @@
+<?php
+$_SESSION['count_in_admin']++;
+echo $this->doctype();
+?>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle($this->translate('Bars', 'default', $_SESSION['translate']) . '-admin')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/pawelcss.css'))
+        ->prependStylesheet($this->basePath('css/material/dialog-polyfill.css'))
+        ->prependStylesheet($this->basePath('css/material/material.min.css')); ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+        ->appendFile($this->basePath('/js/jquery/jquery.min.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery.toaster.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery-ui.js'))
+        ->appendFile($this->basePath('/js/material/material.min.js'))
+        ->appendFile($this->basePath('/js/material/dialog-polyfill.js'))
+        ->appendFile($this->basePath('/js/plupload/plupload-2.1.9/js/plupload.full.min.js')); ?>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.7.22/css/materialdesignicons.min.css">
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <div class="mdl-layout-spacer">
+            </div>
+            <a href="<?php echo $this->url('admin/translate'); ?>"
+               class="translate mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent js-translate"
+               type="button"><?php echo $_SESSION['translate_echo'] ?></a>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer dark">
+        <span class="mdl-layout-title">Witaj <?php echo $this->identity()->getName() ?></span>
+        <nav class="mdl-navigation">
+            <?php if ($this->identity()->getIsAdmin() == 1) echo '<a class="mdl-navigation__link nav-bord" href="' . $this->url('admin/export') . '"><i class="material-icons">get_app</i>' . $this->translate('Export to CSV', 'default', $_SESSION['translate']) . '</a>'; ?>
+            <?php if ($this->identity()->getIsAdmin() == 1) echo '<a class="mdl-navigation__link nav-bord" href="' . $this->url('admin/users') . '"><i class="material-icons">get_app</i>' . $this->translate('User managment', 'default', $_SESSION['translate']) . '</a>'; ?>
+            <a class="mdl-navigation__link nav-bord" href="<?php echo $this->url('admin/profile-settings'); ?>"><i
+                    class="material-icons">face</i> <?php echo $this->translate('Profile settings', 'default', $_SESSION['translate']) ?>
+            </a>
+            <?php if ($this->identity()->getIsAdmin() == 1) echo '<a class="mdl-navigation__link nav-bord" href="' . $this->url('admin/stats') . '"><i class="material-icons">get_app</i>' . $this->translate('Statistics', 'default', $_SESSION['translate']) . '</a>'; ?>
+            <?php if ($this->identity()->getIsAdmin() == 1) echo '<a class="mdl-navigation__link nav-bord" href="' . $this->url('admin/settings') . '"><i class="material-icons">get_app</i>' . $this->translate('Settings', 'default', $_SESSION['translate']) . '</a>'; ?>
+            <?php echo '<a class="mdl-navigation__link nav-bord" href="' . $this->url('admin/points') . '"><i class="material-icons">line_weight</i>' . $this->translate('Show all', 'default', $_SESSION['translate']) . '</a>'; ?>
+        </nav>
+        <hr>
+        <a href="<?php echo $this->url('admin/auth/logout'); ?>"
+           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"><i
+                class="material-icons">exit_to_app</i><?php echo $this->translate('Logout', 'default', $_SESSION['translate']); ?>
+        </a>
+        <a href="<?php echo $this->url('app'); ?>" style="margin-top: 1%" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--red mdl-color-text--white"><?php echo $this->translate('Go to front', 'default', $_SESSION['translate']); ?></a>
+    </div>
+    <main class="mdl-layout__content pawel-div-padd-1">
+        <div class="page-content pawel-div-bord"><?php echo $this->content; ?></div>
+    </main>
+</div>
+<script>
+    var session = '<?php echo $_SESSION['count_in_admin']; ?>';
+    if ($(window).width() <= 480) {
+        $('.js-translate').addClass('hidden');
+    }
+
+    $(document).ready(function () {
+        priority = 'info';
+        if (session == 1) {
+            if ($(window).width() <= 480) {
+            }
+            else {
+                welcomeToast(priority);
+            }
+        }
+    });
+
+    function welcomeToast(priority) {
+        var title = '<?php echo $this->translate('Hello', 'default', $_SESSION['translate']); ?>';
+        var message = '<?php echo $this->translate('Hello in management panel', 'default', $_SESSION['translate']); ?>!';
+
+        $.toaster({priority: priority, title: title, message: message});
+    }
+</script>
+</body>
+</html>

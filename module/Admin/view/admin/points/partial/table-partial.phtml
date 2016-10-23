@@ -1,0 +1,21 @@
+<table class="mdl-data-table mdl-js-data-table" style="width: 100%">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Name', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Adres', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('URL', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Phone', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Add date', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Edit date', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Is active', 'default', $_SESSION['translate']); ?></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody class="js-list-partial">
+    <?php echo $this->partial('admin/points/partial/list-partial.phtml', array('points' => $this->points, 'page' => $this->page, 'limit' => $this->limit)); ?>
+    </tbody>
+</table>
+<div class="js-pagination pawel-pagination">
+    <?php echo $this->paginationHelper($this->points, $this->page, '/admin/points/', $this->limit); ?>
+</div>

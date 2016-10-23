@@ -1,0 +1,11 @@
+<div class="account pawel-account-front js-account-part">
+    <?php if (!$this->identity()): ?>
+        <?php echo $this->partial('application/index/partial/account-partials/login-partial.phtml'); ?>
+    <?php else: ?>
+        <?php echo $this->partial('application/index/partial/account-partials/loged-partial.phtml'); ?>
+    <?php endif; ?>
+</div>
+
+<script>
+
+</script>

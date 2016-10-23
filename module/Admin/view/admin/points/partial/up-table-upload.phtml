@@ -1,0 +1,16 @@
+<?php if ($this->file): $file = $this->file; ?>
+
+    <?php var_dump($this->file); ?>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric"><?php echo $file['name']; ?></td>
+        <td class="mdl-data-table__cell--non-numeric"><?php echo $file['size']; ?></td>
+        <td class="mdl-color-text--green" style="text-align: center"><?php echo $file['good']; ?></td>
+        <td class="mdl-color-text--red" style="text-align: center"><?php echo $file['bad']; ?></td>
+    </tr>
+<?php else: ?>
+    <tr>
+        <td colspan="4"><h5 class="text-center"
+                            style="text-align: center"><?php echo $this->translate("Nothing", 'default', $_SESSION['translate']); ?></h5>
+        </td>
+    </tr>
+<?php endif; ?>

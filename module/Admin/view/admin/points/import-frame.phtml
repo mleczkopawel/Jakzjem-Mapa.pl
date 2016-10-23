@@ -1,0 +1,72 @@
+<dialog class="mdl-dialog pawel-dialog" style="z-index: 1">
+    <div id="plupload" class="js-iff">
+        <div class="clearfix">
+            <h4 class="border-bottom"><?php echo $this->translate('Add new file from drive', 'default', $_SESSION['translate']); ?></h4>
+            <button id="browse" href="javascript:;" type="button"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"><?php echo $this->translate('Select file', 'default', $_SESSION['translate']); ?></button>
+            <hr>
+        </div>
+
+        <div class="clearfix text-right">
+
+        </div>
+        <br>
+        <div class="clearfix js-up-up-table">
+            <div class="js-up-table">
+                <table class="mdl-data-table mdl-js-data-table" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Name', 'default', $_SESSION['translate']); ?></th>
+                        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Size', 'default', $_SESSION['translate']); ?></th>
+                        <th class="mdl-color-text--green"
+                            style="text-align: center"><?php echo $this->translate('Good', 'default', $_SESSION['translate']); ?></th>
+                        <th class="mdl-color-text--red"
+                            style="text-align: center"><?php echo $this->translate('Bad', 'default', $_SESSION['translate']); ?></th>
+                    </tr>
+                    </thead>
+                    <tbody class="js-table-up-refresh">
+                    <?php echo $this->partial('admin/points/partial/up-table-upload.phtml'); ?>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <button
+                class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary js-close'
+                type='button'
+                style="left: 90%"><?php echo $this->translate('Close', 'default', $_SESSION['translate']); ?></button>
+        </div>
+    </div>
+</dialog>
+
+<script>
+    var uploader = new plupload.Uploader({
+        browse_button: 'browse',
+        url: '<?php echo $this->url('admin/points/upload-file'); ?>'
+    });
+
+    uploader.init();
+
+    uploader.bind('FilesAdded', function (up, files) {
+        uploader.start();
+    });
+
+    uploader.bind('FileUploaded', function (up, file, response) {
+        var respobj = $.parseJSON(response.response);
+        $('.js-table-up-refresh').html(respobj.html_up);
+
+        parent.window['REFRESH']();
+    });
+
+    var REFRESH = function () {
+        var refreshElement = $('.js-table-partial');
+        $.ajax({
+            url: '<?php echo $this->url('admin/points/refresh'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {},
+            success: function (response) {
+                refreshElement.replaceWith(response.html);
+            }
+        })
+    }
+</script>

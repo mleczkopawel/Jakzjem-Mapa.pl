@@ -1,0 +1,68 @@
+<table class="mdl-data-table mdl-js-data-table pawel-in-tab pawel-found-tab">
+    <thead>
+    <tr>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate("Name", 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate("Street", 'default', $_SESSION['translate']); ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if (!$this->points): ?>
+        <tr>
+            <td colspan="2"><h5 class="text-center"
+                                style="text-align: center"><?php echo $this->translate("Nothing", 'default', $_SESSION['translate']); ?></h5>
+            </td>
+        </tr>
+    <?php else: ?>
+        <?php foreach ($this->points as $point): ?>
+            <tr id="<?php echo $point->getIdloc() ?>" class="js-found-td">
+                <td class="mdl-data-table__cell--non-numeric"><?php echo $point->getNazwa(); ?></td>
+                <td class="mdl-data-table__cell--non-numeric"><?php echo $point->getAdres(); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    </tbody>
+</table>
+
+<script>
+    var marker;
+    var id_point_click;
+    $('.js-found-td').on('mouseover', function () {
+        for (i = 0; i < markers.length; i++) {
+            if (markers[i].id == $(this).attr('id')) {
+                marker = markers[i];
+            }
+        }
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }).on('mouseout', function () {
+        marker.setAnimation(null);
+    }).on('click', function () {
+        id_point_click = $(this).attr('id');
+        marker.setAnimation(null);
+        for (i = 0; i < markers.length; i++) {
+            if (markers[i].id == $(this).attr('id')) {
+                marker = markers[i];
+            }
+        }
+        $.ajax({
+            url: '<?php echo $this->url('app/getPoint'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                point: id_point_click
+            },
+            success: function (response) {
+                $('#checked').html(response.html);
+            }
+        });
+        mapa.setCenter(marker.getPosition());
+        $('.js-checked-tab-part').attr('id', id_point_click);
+        $('#found').removeClass('is-active');
+        $('.js-all-found-a').removeClass('is-active');
+        $('#checked').addClass('is-active');
+        $('.js-selected-a').addClass('is-active');
+        $('#account').removeClass('is-active');
+        $('.js-account-a').removeClass('is-active');
+    });
+
+
+</script>

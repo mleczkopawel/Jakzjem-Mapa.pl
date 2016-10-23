@@ -1,0 +1,29 @@
+<div class="js-checked-tab-part" style="text-align: center">
+    <?php if (!$this->point): ?>
+        <h3 style="text-align: center"><?php echo $this->translate('Nothing found', 'default', $_SESSION['translate']); ?></h3>
+    <?php else: ?>
+        <?php $point = $this->point; ?>
+        <h3><?php echo $this->translate('Name', 'default', $_SESSION['translate']); ?>
+            : <?php echo $point->getNazwa(); ?></h3>
+        <h4><?php echo $this->translate('Adress', 'default', $_SESSION['translate']); ?>
+            : <?php echo $point->getAdres(); ?></h4>
+        <h4><?php echo $this->translate('Phone', 'default', $_SESSION['translate']); ?>
+            : <?php echo $point->getTelephone(); ?></h4>
+        <h4><a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary"
+               href="<?php echo $point->getUrl(); ?>"
+               target="blank"><?php echo $this->translate('Go to site', 'default', $_SESSION['translate']); ?></a></h4>
+        <h4><a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary"
+               href="http://<?php echo $_SESSION['locale']; ?>.jakdojade.pl/?fn=Twoja lokalizacja&fc=<?php echo $_SESSION['pos_local']['lat'] ?>:<?php echo $_SESSION['pos_local']['lon'] ?>&tn=<?php echo $point->getNazwa() ?>&tc=<?php echo $point->getLat() ?>:<?php echo $point->getLon() ?>"
+               target="_blank"><?php echo $this->translate('Lead by', 'default', $_SESSION['translate']); ?>
+                jakdojade.pl</a></h4>
+    <?php endif; ?>
+</div>
+
+<script>
+    for (i = 0; i < markers.length; i++) {
+        if (markers[i].id == $(this).attr('id')) {
+            markers[i].setAnimation(null);
+        }
+    }
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+</script>

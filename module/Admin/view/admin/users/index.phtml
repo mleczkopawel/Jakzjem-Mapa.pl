@@ -1,0 +1,88 @@
+<table class="mdl-data-table mdl-js-data-table" style="width: 100%">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Name', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Email', 'default', $_SESSION['translate']); ?></th>
+        <th><?php echo $this->translate('Add date', 'default', $_SESSION['translate']); ?></th>
+        <th><?php echo $this->translate('Edit date', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Is admin', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Is accepted', 'default', $_SESSION['translate']); ?></th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Providers', 'default', $_SESSION['translate']); ?></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody class="js-list-partial">
+    <?php $i = 0;
+    foreach ($this->users as $user): ?>
+        <tr>
+            <td><?php echo ++$i; ?></td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $user->getName() ?></td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $user->getEmail() ?></td>
+            <td><?php echo $user->getAddDate()->format('d.m.Y') ?></td>
+            <td><?php echo $user->getEditDate() ? $user->getEditDate()->format('d.m.Y') : $this->translate('Not edited', 'default', $_SESSION['translate']) ?></td>
+            <td>
+                <?php if ($user->getIsAdmin() == 1): ?>
+                    <i class="material-icons mdl-color-text--green">done</i>
+                <?php else: ?>
+                    <i class="material-icons mdl-color-text--red">clear</i>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php if ($user->getIsAccepted() == 1): ?>
+                    <i class="material-icons mdl-color-text--green">done</i>
+                <?php else: ?>
+                    <i class="material-icons mdl-color-text--red">clear</i>
+                <?php endif; ?>
+            </td>
+            <td class="mdl-data-table__cell--non-numeric">
+                <?php
+                $providers = $user->getProviders();
+                $i = 0;
+                foreach ($providers as $provider) {
+                    if ($i > 0)
+                        echo ', ' . $provider;
+                    else
+                        echo $provider;
+                    $i++;
+                };
+                ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url('admin/users/edit', array('id' => $user->getId())) ?>"
+                   id="edit<?php echo $i ?>"
+                   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary"><?php echo $this->translate('Edit', 'default', $_SESSION['translate']); ?></a>
+                <div class="mdl-tooltip" data-mdl-for="edit<?php echo $i ?>">
+                    <?php echo $this->translate('Edit', 'default', $_SESSION['translate']); ?>
+                </div>
+                <?php if ($user->getIsAdmin() == 1): ?>
+                    <a href="<?php echo $this->url('admin/users/addAdmin', array('id' => $user->getId())) ?>"
+                       id="deactivate<?php echo $i; ?>"
+                       class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent js-deactivate"><?php echo $this->translate('Deactivate', 'default', $_SESSION['translate']); ?></a>
+                    <div class="mdl-tooltip" data-mdl-for="deactivate<?php echo $i ?>">
+                        <?php echo $this->translate('Deactivate', 'default', $_SESSION['translate']); ?>
+                    </div>
+                <?php else: ?>
+                    <a href="<?php echo $this->url('admin/users/addAdmin', array('id' => $user->getId())) ?>"
+                       id="activate<?php echo $i; ?>"
+                       class="mdl-button disabled is-disabled mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--green mdl-color-text--white js-deactivate"><?php echo $this->translate('Activate', 'default', $_SESSION['translate']); ?></a>
+                    <div class="mdl-tooltip" data-mdl-for="activate<?php echo $i ?>">
+                        <?php echo $this->translate('Activate', 'default', $_SESSION['translate']); ?>
+                    </div>
+                <?php endif; ?>
+                <a href="<?php echo $this->url('admin/users/delete', array('id' => $user->getId())) ?>"
+                   id="delete<?php echo $i ?>"
+                   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--red mdl-color-text--white js-delete"><?php echo $this->translate('Delete', 'default', $_SESSION['translate']); ?></a>
+                <div class="mdl-tooltip" data-mdl-for="delete<?php echo $i ?>">
+                    <?php echo $this->translate('Delete', 'default', $_SESSION['translate']); ?>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+
+<script>
+    console.log('<?php echo $this->translate('You are in: ', 'default', $_SESSION['translate']); ?>' + 'users');
+</script>

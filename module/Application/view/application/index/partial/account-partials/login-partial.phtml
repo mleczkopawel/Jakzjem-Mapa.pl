@@ -1,0 +1,100 @@
+<h2 class="pawel-center"><?php echo $this->translate('Login', 'default', $_SESSION['translate']); ?></h2>
+<?php
+$form = $this->loginForm;
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<div class="mdl-textfield mdl-js-textfield js-login-div">
+    <?php
+    $login = $form->get('name');
+    echo $this->formInput($login);
+    ?>
+    <div class="mdl-textfield mdl-js-textfield js-login-div">
+        <label class="mdl-textfield__label"
+               for="name"><?php echo $this->translate('Login/e-mail', 'default', $_SESSION['translate']); ?></label>
+        <input name="namee" class="mdl-textfield__input js-login" value="" type="text">
+        <span
+            class="mdl-textfield__error"><?php echo $this->translate('User not does exist', 'default', $_SESSION['translate']); ?></span>
+    </div>
+</div>
+<!--    <br>-->
+<div class="mdl-textfield mdl-js-textfield">
+    <?php
+    $password = $form->get('password');
+    echo '<label class="mdl-textfield__label" for="password">' . $this->translate('Password', 'default', $_SESSION['translate']) . '</label>';
+    echo $this->formInput($password);
+    ?>
+</div>
+<br>
+<?php
+echo $this->translate($this->formSubmit($form->get('loginSubmit'))); ?>
+<a href="<?php echo $this->social['google'] ?>" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--red mdl-color-text--white" style="width: 93%; margin-top: 1%">
+    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="white" d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
+    </svg> <?php echo $this->translate('Sign in with Google', 'default', $_SESSION['translate']); ?>
+</a>
+
+<a href="<?php echo $this->social['facebook']; ?>" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--blue mdl-color-text--white" style="width: 93%; margin-top: 1%">
+    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="white" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+    </svg> <?php echo $this->translate('Sign in with Facebook', 'default', $_SESSION['translate']); ?>
+</a>
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--green mdl-color-text--white js-part-register" style="width: 100%;margin-top: 1%;"><?php echo $this->translate('Register', 'default', $_SESSION['translate']); ?></button>
+<?php
+$this->form()->closeTag();
+?>
+
+<script>
+    $('.js-login').blur(function () {
+        $.ajax({
+            url: '<?php echo $this->url('admin/auth/checkName'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                name: $('.js-login').val()
+            },
+            success: function (response) {
+                if (response.code == 1) {
+                    console.log('<?php echo $this->translate('Exists user', 'default', $_SESSION['translate']); ?>:' + $('.js-login').val());
+                    $('.js-hiden-login').val(response.name.name);
+                    $('.js-login-submit').attr('disabled', false);
+                } else {
+                    console.log('<?php echo $this->translate('User not exists', 'default', $_SESSION['translate']); ?>:' + $('.js-login').val());
+                    $('.js-login-div').addClass('is-invalid');
+                    $('.js-login-submit').attr('disabled', true);
+                }
+            }
+        })
+    });
+    $('.js-login-submit').on('click', function (e) {
+        var login = $('.js-login').val();
+        var password = $('.js-login-register').val();
+        if (login != null && login != '') {
+            if (password != null && password != '') {
+                $.ajax({
+                    url: '<?php echo $this->url('app/auth/login'); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        login: login,
+                        password: password
+                    },
+                    success: function (response) {
+                        if (response.auth) {
+                            $('.js-account-part').html(response.html);
+                        }
+                        toast = response.toast;
+                        $.toaster({
+                            priority: toast.type,
+                            title: toast.title,
+                            message: toast.message
+                        });
+                    }
+                });
+            } else {}
+        } else {}
+
+        e.preventDefault();
+        return false;
+    })
+</script>

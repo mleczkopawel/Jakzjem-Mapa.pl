@@ -1,0 +1,24 @@
+<table class="mdl-data-table mdl-js-data-table" style="width: 100%">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Search name', 'default', $_SESSION['translate']); ?></th>
+        <th><?php echo $this->translate('Count', 'default', $_SESSION['translate']); ?></th>
+    </tr>
+    </thead>
+    <tbody class="js-list-partial">
+    <?php $i = 0;
+    foreach ($this->stats as $stat): ?>
+        <tr>
+            <td><?php echo ++$i; ?></td>
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $stat->getName() ?></td>
+            <td><?php echo $stat->getCount() ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+
+<script>
+    console.log('<?php echo $this->translate('You are in: ', 'default', $_SESSION['translate']); ?>' + 'stats');
+</script>

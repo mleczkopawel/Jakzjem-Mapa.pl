@@ -1,0 +1,144 @@
+<h2 class="pawel-mar-x-10-0-15-0"><?php echo $this->translate('Points', 'default', $_SESSION['translate']); ?>
+    (<?php echo count($this->points) ?>)</h2>
+<button id="import-button" type="button"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary show-modal pawel-mar-0-0-2-0"><?php echo $this->translate('Add new points from CSV file', 'default', $_SESSION['translate']); ?></button>
+<div class="mdl-tooltip" data-mdl-for="import-button">
+    <?php echo $this->translate('Click to import csv file and import points to map.', 'default', $_SESSION['translate']); ?>
+</div>
+<?php echo $this->partial('admin/points/import-frame'); ?>
+
+<?php if ($this->identity()->getIsAdmin() == 1): ?>
+    <div class="js-table-partial">
+        <?php echo $this->partial('admin/points/partial/table-partial.phtml'); ?>
+    </div>
+<?php endif; ?>
+
+
+<script>
+    console.log('<?php echo $this->translate('You are in: ', 'default', $_SESSION['translate']); ?>' + 'show all');
+
+    var dialog = document.querySelector('dialog');
+    dialogPolyfill.registerDialog(dialog);
+
+    $('.show-modal').on('click', function () {
+        dialog.showModal();
+        $('.mdl-dialog').attr('style', 'z-index: 10000');
+        $('.backdrop').attr('style', 'z-index: 9999');
+    });
+
+    $('.js-close').on('click', function () {
+        dialog.close();
+    });
+
+    $('._dialog_overlay').on('click', function () {
+        dialog.close();
+    });
+
+    $('body').on('click', '.js-pagination li a', function (el) {
+        $('[data-toggle="tooltip"]').tooltip({trigger: 'hover', container: 'body'});
+        tempPage = $(this).prop('href').match(/\d+$/)[0];
+        if (tempPage > 0) {
+            page = tempPage;
+            loadPoints();
+        }
+        el.preventDefault();
+        return false;
+    });
+
+    function loadPoints() {
+        $('[data-toggle="tooltip"]').tooltip({trigger: 'hover', container: 'body'});
+        search = $('.js-search').val();
+
+        LoadBarOverlay.showBar($('.js-campaigns-list'));
+
+        $.ajax({
+            url: '<?php $this->url('admin/points'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                search: search,
+                page: page
+            },
+            success: function (response) {
+                if (response.success === 1) {
+                    $('.js-list-partial').replaceWith(response.html);
+                }
+                else {
+//                    Alert.message(response.message.type, response.message.content);
+                }
+            },
+            error: function (response) {
+                Alert.defaultError();
+                console.log("Filter brands list! ERROR: ", arguments);
+                console.log(search);
+            },
+            complete: function () {
+                LoadBarOverlay.hideBar($('.js-campaigns-list'));
+            }
+        });
+
+        $('body').trigger('click');
+    }
+
+    //    komentarz
+
+    $('.js-deactivate').on('click', function (e) {
+        var url = $(this).attr('href');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: {},
+            success: function (response) {
+                if (response.active == 1) {
+                    $.toaster({
+                        priority: 'success',
+                        title: 'Tak!',
+                        message: 'Aktywowałem punkt o nazwie ' + response.name
+                    });
+                } else {
+                    $.toaster({
+                        priority: 'success',
+                        title: 'Tak!',
+                        message: 'Dezaktywowałem punkt o nazwie ' + response.name
+                    });
+                }
+                REFRESH();
+            }
+        });
+
+        e.preventDefault();
+        return false;
+    });
+
+    $('.js-delete').on('click', function (e) {
+        var url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: {},
+            success: function (response) {
+                $.toaster({priority: 'success', title: 'Tak!', message: 'Usunąłem punkt o nazwie ' + response.name});
+                REFRESH();
+            }
+        });
+
+        e.preventDefault();
+        return false;
+    });
+
+    var REFRESH = function () {
+        var refreshElement = $('.js-table-partial');
+        $.ajax({
+            url: '<?php echo $this->url('admin/points/refresh'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {},
+            success: function (response) {
+                refreshElement.replaceWith(response.html);
+            }
+        })
+    }
+</script>

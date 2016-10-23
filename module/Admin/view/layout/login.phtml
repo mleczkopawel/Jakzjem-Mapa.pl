@@ -1,0 +1,65 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle($this->translate('Bars', 'default', $_SESSION['translate']) . '-admin')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/pawelcss.css'))
+        ->prependStylesheet($this->basePath('css/material/material.min.css')); ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+        ->appendFile($this->basePath('/js/jquery/jquery.min.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery.toaster.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery-ui.js'))
+        ->appendFile($this->basePath('/js/material/material.min.js')); ?>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <div class="mdl-layout-spacer"></div>
+        </div>
+        <a href="<?php echo $this->url('admin/translate'); ?>"
+           class="translate mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent js-translate"
+           type="button"><?php echo $_SESSION['translate_echo'] ?></a>
+    </header>
+    <div class="mdl-layout__drawer dark">
+    </div>
+    <main class="mdl-layout__content pawel-div-padd-1">
+        <div class="page-content pawel-div-bord">
+            <?php echo $this->content; ?>
+        </div>
+    </main>
+</div>
+</body>
+<script>
+
+    if ($(window).width() <= 480) {
+        $('.js-translate').addClass('hidden');
+        $('.pawel-login').attr('style', 'border: 0px; width: auto');
+    }
+
+    $(document).ready(function () {
+        $('.mdl-layout__drawer-button').addClass('hidden');
+        priority = 'warning';
+        welcomeToast(priority);
+    });
+
+    function welcomeToast(priority) {
+        var title = '<?php echo $this->translate('Hello', 'default', $_SESSION['translate']); ?>';
+        var message = '<?php echo $this->translate('You must login to explore the panel', 'default', $_SESSION['translate']); ?>!';
+
+        $.toaster({priority: priority, title: title, message: message});
+    }
+</script>
+</html>

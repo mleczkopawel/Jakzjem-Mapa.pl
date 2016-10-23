@@ -1,0 +1,111 @@
+<div class="pawel-login">
+    <?php
+    $form = $this->form;
+    $form->prepare();
+    echo $this->form()->openTag($form);
+
+    $login = $form->get('login');
+    echo $this->formInput($login);
+    ?>
+    <div class="mdl-textfield mdl-js-textfield js-register-div">
+        <label class="mdl-textfield__label"
+               for="name"><?php echo $this->translate('Login', 'default', $_SESSION['translate']); ?></label>
+        <input name="namee" class="mdl-textfield__input js-register" value="" type="text">
+        <span
+            class="mdl-textfield__error"><?php echo $this->translate('User exists', 'default', $_SESSION['translate']); ?></span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield js-register-email-div">
+        <?php
+        $email = $form->get('email');
+        echo '<label class="mdl-textfield__label" for="email">' . $this->translate('Email', 'default', $_SESSION['translate']) . '</label>';
+        echo $this->formInput($email);
+        ?>
+        <span
+            class="mdl-textfield__error"><?php echo $this->translate('Email exists', 'default', $_SESSION['translate']); ?></span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield">
+        <?php
+        $confirm_email = $form->get('confirm_email');
+        echo '<label class="mdl-textfield__label" for="confirm_email">' . $this->translate('Confirm Email', 'default', $_SESSION['translate']) . '</label>';
+        echo $this->formInput($confirm_email);
+        ?>
+        <?php echo $this->formElementErrors($confirm_email); ?>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield">
+        <?php
+        $password = $form->get('password');
+        echo '<label class="mdl-textfield__label" for="password">' . $this->translate('Password', 'default', $_SESSION['translate']) . '</label>';
+        echo $this->formInput($password);
+        ?>
+        <?php echo $this->formElementErrors($password); ?>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield">
+        <?php
+        $confirm_password = $form->get('confirm_password');
+        echo '<label class="mdl-textfield__label" for="confirm_password">' . $this->translate('Confirm Password', 'default', $_SESSION['translate']) . '</label>';
+        echo $this->formInput($confirm_password);
+        ?>
+        <?php echo $this->formElementErrors($confirm_password); ?>
+    </div>
+    <?php
+    echo $this->translate($this->formSubmit($form->get('registerSubmit')));
+    echo $this->form()->closeTag();
+    ?>
+</div>
+
+<script>
+    var submit1 = false;
+    var submit2 = false;
+
+    $('.js-register').blur(function () {
+        $.ajax({
+            url: '<?php echo $this->url('admin/auth/checkName'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                name: $('.js-register').val()
+            },
+            success: function (response) {
+                if (response.code == 1) {
+                    console.log('<?php echo $this->translate('Exists user', 'default', $_SESSION['translate']); ?>:' + $('.js-login').val());
+                    $('.js-register-div').addClass('is-invalid');
+                    $('.js-register-submit').attr('disabled', true);
+                } else {
+                    console.log('<?php echo $this->translate('User not exists', 'default', $_SESSION['translate']); ?>:' + $('.js-login').val());
+                    $('.js-register-login').val($('.js-register').val());
+//                    $('.js-register-submit').attr('disabled', false);
+                    submit1 = true;
+                    if (submit1 && submit2) {
+                        $('.js-register-submit').attr('disabled', false);
+                    }
+                }
+            }
+        })
+    });
+
+    $('.js-register-email').blur(function () {
+        $.ajax({
+            url: '<?php echo $this->url('admin/auth/checkName'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                email: $('.js-register-email').val()
+            },
+            success: function (response) {
+                if (response.code == 1) {
+                    console.log('<?php echo $this->translate('Exists email', 'default', $_SESSION['translate']); ?>:' + $('.js-login').val());
+                    $('.js-register-email-div').addClass('is-invalid');
+                    $('.js-register-submit').attr('disabled', true);
+                } else {
+                    console.log('<?php echo $this->translate('Email not exists', 'default', $_SESSION['translate']); ?>:' + $('.js-login').val());
+                    submit2 = true;
+                    if (submit1 && submit2) {
+                        $('.js-register-submit').attr('disabled', false);
+                    }
+                }
+            }
+        })
+    });
+
+
+</script>

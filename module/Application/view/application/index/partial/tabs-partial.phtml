@@ -1,0 +1,26 @@
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect tabsy">
+    <div class="mdl-tabs__tab-bar">
+        <a href="#account"
+           class="mdl-tabs__tab js-account-a"><?php echo $this->translate('Account', 'default', $_SESSION['translate']); ?></a>
+        <a href="#found"
+           class="mdl-tabs__tab js-all-found-a is-active"><?php echo $this->translate('Found', 'default', $_SESSION['translate']); ?></a>
+        <a href="#checked"
+           class="mdl-tabs__tab js-selected-a"><?php echo $this->translate('Checked', 'default', $_SESSION['translate']); ?></a>
+    </div>
+
+    <div class="mdl-tabs__panel pawel-tabs-content" id="account">
+        <div class="pawel-in-tab js-account">
+            <?php echo $this->partial('application/index/partial/account-partial.phtml') ?>
+        </div>
+    </div>
+    <div class="mdl-tabs__panel pawel-tabs-content is-active" id="found">
+        <div class="pawel-in-tab js-all-found">
+            <?php echo $this->partial('application/index/partial/found-partial.phtml') ?>
+        </div>
+    </div>
+    <div class="mdl-tabs__panel pawel-tabs-content" id="checked">
+        <div class="pawel-in-tab js-selected">
+            <?php echo $this->partial('application/index/partial/checked-partial.phtml') ?>
+        </div>
+    </div>
+</div>

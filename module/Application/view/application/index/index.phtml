@@ -1,0 +1,412 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+    <a href="<?php echo $this->url('app/translate'); ?>"
+       class="translate mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent js-translate"
+       type="button"><?php echo $_SESSION['translate_echo'] ?></a>
+    <div class="mdl-layout__drawer pawel-drawer js-pawel-drawer">
+        <div class="formek">
+            <form action="#">
+                <div class="mdl-textfield mdl-js-textfield" style="width: 100%">
+                    <input class="mdl-textfield__input js-ajax-search" type="text" id="search">
+                    <input class="mdl-textfield__input js-ajax-search-hid" type="hidden" id="search">
+                    <label class="mdl-textfield__label js-ajax-label-search"
+                           for="search"><?php echo $this->translate('What are you looking for hungry person', 'default', $_SESSION['translate']); ?>
+                        ?</label>
+                    <div class="mdl-tooltip" data-mdl-for="search">
+                        <?php echo $this->translate('Type here anything what you want, maybe sth will found.', 'default', $_SESSION['translate']); ?>
+                    </div>
+                </div>
+            </form>
+            <button type="button"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored js-button-search-ajax"><?php echo $this->translate('Search', 'default', $_SESSION['translate']); ?></button>
+            <button type="button"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent js-clear-button bott"><?php echo $this->translate('Clear', 'default', $_SESSION['translate']); ?></button>
+        </div>
+        <?php echo $this->partial('application/index/partial/tabs-partial.phtml'); ?>
+        <footer class="mdl-mini-footer pawel-footer">
+            <div class="mdl-logo"><?php echo $this->translate('Bars', 'default', $_SESSION['translate']); ?></div>
+<!--            <ul class="mdl-mini-footer__link-list">-->
+<!--                <li><a href="#">Help</a></li>-->
+<!--                <li><a href="#">Privacy & Terms</a></li>-->
+<!--            </ul>-->
+        </footer>
+    </div>
+    <main class="mdl-layout__content pawel-content">
+        <div id="right">
+            <div id="map"></div>
+        </div>
+    </main>
+</div>
+<?php echo $this->partial('application/index/partial/add-partial.phtml', array('form' => $this->form, 'town' => array('lat' => $this->lat, 'lon' => $this->lon))); ?>
+<?php echo $this->partial('application/index/partial/account-partials/register-partial.phtml'); ?>
+<script>
+    var dialog = document.querySelector('#add');
+    dialogPolyfill.registerDialog(dialog);
+
+    var dialogReg = document.querySelector('#register');
+    dialogPolyfill.registerDialog(dialogReg);
+
+    if ($(window).width() <= 480) {
+        $('.pawel-footer').addClass('hidden');
+    }
+
+    $('.js-part-register').on('click', function (e) {
+        dialogReg.showModal();
+        $('.mdl-dialog').attr('style', 'z-index: 10000');
+        $('.backdrop').attr('style', 'z-index: 9999');
+        console.log('aaaaaaaffffff');
+        e.preventDefault();
+        return false;
+    });
+
+
+    //    ****************************MAPA*******************************
+    //Zmienne globalne
+    var mapa;
+    var dymek;
+    var markers = [];
+    var local_point = null;
+    var new_point_lat;
+    var new_point_lon;
+    var initMap = function () {
+        var wspolrzedne = new google.maps.LatLng('<?php echo $this->lat; ?>', '<?php echo $this->lon; ?>');
+        var customMapType = new google.maps.StyledMapType(
+            [{
+                "featureType": "landscape.man_made",
+                "elementType": "geometry",
+                "stylers": [{"color": "#f7f1df"}]
+            }, {
+                "featureType": "landscape.natural",
+                "elementType": "geometry",
+                "stylers": [{"color": "#d0e3b4"}]
+            }, {
+                "featureType": "landscape.natural.terrain",
+                "elementType": "geometry",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "poi",
+                "elementType": "labels",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "poi.business",
+                "elementType": "all",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "poi.medical",
+                "elementType": "geometry",
+                "stylers": [{"color": "#fbd3da"}]
+            }, {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [{"color": "#bde6ab"}]
+            }, {
+                "featureType": "road",
+                "elementType": "geometry.stroke",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "road",
+                "elementType": "labels",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "geometry.fill",
+                "stylers": [{"color": "#ffe15f"}]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [{"color": "#efd151"}]
+            }, {
+                "featureType": "road.arterial",
+                "elementType": "geometry.fill",
+                "stylers": [{"color": "#ffffff"}]
+            }, {
+                "featureType": "road.local",
+                "elementType": "geometry.fill",
+                "stylers": [{"color": "black"}]
+            }, {
+                "featureType": "transit.station.airport",
+                "elementType": "geometry.fill",
+                "stylers": [{"color": "#cfb2db"}]
+            }, {"featureType": "water", "elementType": "geometry", "stylers": [{"color": "#a2daf2"}]}], {
+                name: 'Dark'
+            });
+        var customMapTypeId = 'custom_style';
+
+        var opcjeMapy = {
+            zoom: 13,
+            center: wspolrzedne,
+            mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
+            },
+            streetViewControl: false,
+            mapTypeControl: false,
+            zoomControl: true
+        };
+        dymek = new google.maps.InfoWindow();
+        mapa = new google.maps.Map(document.getElementById("map"), opcjeMapy);
+        if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+
+                local_point = new google.maps.Marker({
+                    position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                    title: '<?php echo $this->translate("You are in here", 'default', $_SESSION['translate']); ?>',
+                    map: mapa,
+                    icon: new google.maps.MarkerImage('img/direction_down.png', new google.maps.Size(32, 37, "px", "px"))
+                });
+
+                local_point.txt = '<h4><?php echo $this->translate("You are in here", 'default', $_SESSION['translate']); ?></h4>';
+
+                google.maps.event.addListener(local_point, "click", function (zdarzenie) {
+                    if (zdarzenie) {
+                        dymek.setContent(local_point.txt);
+                        dymek.open(mapa, local_point);
+                    }
+                });
+
+                $.ajax({
+                    url: '<?php echo $this->url('app/setToSession'); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        lat: local_point.getPosition().lat(),
+                        lon: local_point.getPosition().lng()
+                    }
+                });
+                getData(null);
+            });
+        }
+        mapa.mapTypes.set(customMapTypeId, customMapType);
+        mapa.setMapTypeId(customMapTypeId);
+        google.maps.event.trigger('click');
+
+        google.maps.event.addListener(mapa, 'click', function (e) {
+            userAddMarker(e.latLng, mapa);
+        })
+    };
+    function userAddMarker(latLon, map) {
+        locat = latLon;
+        var marker = new google.maps.Marker({
+            position: latLon,
+            map: map,
+            icon: new google.maps.MarkerImage('img/new-add.png', new google.maps.Size(32, 37, "px", "px")),
+            animation: google.maps.Animation.DROP
+        });
+
+        google.maps.event.addListener(marker, "click", function (zdarzenie) {
+            if (zdarzenie) {
+                dymek.setContent('<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored js-add-to-map"><?php echo $this->translate('Add to map', 'default', $_SESSION['translate']); ?></button>');
+                dymek.open(mapa, marker);
+                $('.js-add-to-map').on('click', function () {
+                    dialog.showModal();
+                    $('.mdl-dialog').attr('style', 'z-index: 10000');
+                    $('.backdrop').attr('style', 'z-index: 9999');
+                    new_point_lat = latLon.lat();
+                    new_point_lon = latLon.lng();
+                });
+            }
+        });
+    }
+    //    Funkcja do parsowania danych w postaci JSON otrzymanych postem od requesta do tablic zmiennych
+    function getData(val) {
+        if (local_point == null) {
+            local_lat = '<?php echo $this->lat; ?>';
+            local_lon = '<?php echo $this->lon; ?>';
+        } else {
+            local_lat = local_point.getPosition().lat();
+            local_lon = local_point.getPosition().lng();
+        }
+
+        var marker;
+        var idd = [];
+        var laa = [];
+        var loo = [];
+        var naa = [];
+        var op = [];
+        value = val;
+        $.ajax({
+            url: '<?php echo $this->url('app'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                search: value
+            },
+            success: function (response) {
+//                console.log(response.data);
+                $.toaster({
+                    priority: response.message['type'],
+                    title: response.message['title'],
+                    message: response.message['context']
+                });
+                for (i = 0; i < response.data.length; i++) {
+                    idd[i] = response.data[i].id;
+                    laa[i] = response.data[i].lat;
+                    loo[i] = response.data[i].lon;
+                    naa[i] = response.data[i].nazwa;
+                    marker = dodajMarker(laa[i], loo[i], naa[i], idd[i], local_lat, local_lon);
+                    markers.push(marker);
+                }
+                $('.js-all-found').html(response.html);
+            },
+            error: function () {
+                message = <?php echo $this->message;?>;
+                console.log(message);
+                $.toaster({priority: message.type, title: message.title, message: message.context});
+            }
+        });
+        mapa.setCenter(local_point.getPosition());
+    }
+
+    function setMapOnAll(mapaa) {
+        $('.js-all-found').html('');
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(mapaa);
+        }
+    }
+
+    //    Funkcja do dodawania markerów na mapę
+    function dodajMarker(lat, lon, nazwa, id, local_lat, local_lon) {
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lon),
+            title: nazwa,
+            map: mapa,
+            id: id
+        });
+
+        marker.txt = '<h4>' + nazwa + '</h4><a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" href="http://<?php echo $_SESSION['locale']; ?>.jakdojade.pl/?fn=Twoja lokalizacja&fc=' + local_lat + ':' + local_lon + '&tn=' + nazwa + '&tc=' + lat + ':' + lon + '" target="blank">Przenieś do JAKDOJADE.PL</a>';
+
+        google.maps.event.addListener(marker, "click", function (zdarzenie) {
+            if (zdarzenie) {
+                dymek.setContent(marker.txt);
+                dymek.open(mapa, marker);
+            }
+        });
+//        mapa.setCenter(marker.getPosition());
+
+        return marker;
+    }
+    //    ------------------------KONIEC MAPA-------------------------
+
+
+    $('.js-get-locale').on('click', function () {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                title: '<?php echo $this->translate("You are in here", 'default', $_SESSION['translate']); ?>',
+                map: mapa,
+                animation: google.maps.Animation.DROP,
+                icon: 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'
+            });
+
+            marker.txt = '<h4><?php echo $this->translate("You are in here", 'default', $_SESSION['translate']); ?></h4>';
+
+            google.maps.event.addListener(marker, "click", function (zdarzenie) {
+                if (zdarzenie) {
+                    dymek.setContent(marker.txt);
+                    dymek.open(mapa, marker);
+                }
+            });
+
+            mapa.setCenter(marker.getPosition());
+        });
+    });
+
+    function sendToStats(value) {
+        $.ajax({
+            url: '<?php echo $this->url('app/sendToStats'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                value: value
+            }
+        });
+    }
+
+    //    ******************************DOCUMENT READY*****************************
+    $('document').ready(function () {
+        //    ***********************SZUKAJ********************************
+
+        $('.js-button-search-ajax').on('click', function (e) {
+            setMapOnAll(null);
+            value = $('.js-ajax-search').val();
+            sendToStats(value);
+            getData(value);
+
+            e.preventDefault();
+            return false;
+        });
+
+        $('.js-ajax-search').on('keyup', function (e) {
+            value = $('.js-ajax-search').val();
+            if (e.keyCode == 13) {
+                setMapOnAll(null);
+                sendToStats(value);
+                getData(value);
+
+            }
+
+            e.preventDefault();
+            return false;
+        });
+
+//    ---------------------------KONIEC SZUKAJ----------------------
+
+
+//    **************************CZYŚĆ********************************
+
+        $('.js-clear-button').on('click', function () {
+            setMapOnAll(null);
+            $('.js-ajax-search').val('').attr('placeholder', '<?php echo $this->translate('What are you looking for hungry person', 'default', $_SESSION['translate']); ?>?');
+            $.toaster({
+                priority: 'info',
+                title: 'Info!',
+                message: "<?php echo $this->translate("I've cleared all", 'default', $_SESSION['translate']); ?>."
+            });
+//            $('.js-advanced').addClass('is-active');
+//            $('.js-advanced-a').addClass('is-active');
+            $('.js-all-found-a').addClass('is-active');
+            $('#found').addClass('is-active');
+            $('.js-all-found').addClass('is-active').html('<table class="mdl-data-table mdl-js-data-table pawel-in-tab"><thead><tr><th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate("Name", 'default', $_SESSION['translate']); ?></th><th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate("Street", 'default', $_SESSION['translate']); ?></th></tr></thead><tbody><tr><td colspan="2"><h5 class="text-center" style="text-align: center"><?php echo $this->translate("Nothing", 'default', $_SESSION['translate']); ?></h5></td></tr></tbody></table>');
+            $('#checked').removeClass('is-active').html('<h2><?php echo $this->translate("Nothing", 'default', $_SESSION['translate']); ?></h2>');
+            $('.js-selected-a').removeClass('is-active');
+            $('#account').removeClass('is-active');
+            $('.js-account-a').removeClass('is-active');
+        });
+
+//    --------------------------KONIEC CZYŚĆ-----------------------
+
+
+//    ***************************DATA AUTOCOMPLETE***********************
+        $.ajax({
+            url: '<?php echo $this->url('app/getByLocale');?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                locale: '<?php echo $this->localId; ?>'
+            },
+            success: function (response) {
+                var tags = [response.length];
+                for (i = 0; i < response.length; i++) {
+                    tags[i] = response[i];
+                }
+                $('.ui-autocomplete').attr('style', 'top: 49px; left: 23.75px; width: 443.6px; display: none; height: 30%; overflow-y: scroll; overflow-x: hidden;');
+
+                $("#search").autocomplete({
+                    source: tags,
+                    minLength: 0
+                });
+            },
+            error: function (response) {
+                console.log('no i nie działa... ');
+            }
+        });
+//    ----------------------------KONIEC AUTOCOMPLETE------------------------
+        $('.mdl-layout__drawer-button').attr('style', 'border: 1.5px solid black');
+        $('.mdl-layout__tab-bar-button').attr(style = "background-color: whitesmoke;");
+//        getData(null);
+    });
+    //    ---------------------------KONIEC READY---------------------------------
+
+</script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn3HRGusUA7GuR3bvOGtBzBnbyI5Me8QI&callback=initMap"></script>
+

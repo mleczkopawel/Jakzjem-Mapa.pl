@@ -1,0 +1,123 @@
+<a href="<?php echo $this->url('admin/points'); ?>"
+   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary show-modal pawel-mar-0-0-2-0 pawel-left">Wróć</a>
+<div class="pawel-edit">
+    <?php
+    $form = $this->form;
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+    <div id="name-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="name"><?php echo $this->translate('Name', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $name = $form->get('name');
+        echo $this->formInput($name);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="name-div">
+        <?php echo $this->translate('Nazwa', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="lat-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="lat"><?php echo $this->translate('Lat', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $lat = $form->get('lat');
+        echo $this->formInput($lat);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="lat-div">
+        <?php echo $this->translate('Lat', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="lon-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="lon"><?php echo $this->translate('Lon', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $lon = $form->get('lon');
+        echo $this->formInput($lon);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="lon-div">
+        <?php echo $this->translate('Lon', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="datasm-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="datasm"><?php echo $this->translate('Data small', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $datasm = $form->get('datasm');
+        echo $this->formInput($datasm);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="datasm-div">
+        <?php echo $this->translate('Data small', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="databg-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="databg"><?php echo $this->translate('Data big', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $databg = $form->get('databg');
+        echo $this->formInput($databg);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="databg-div">
+        <?php echo $this->translate('Data big', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="tags-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="tags"><?php echo $this->translate('Tags', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $tags = $form->get('tags');
+        echo $this->formInput($tags);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="tags-div">
+        <?php echo $this->translate('Tags', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="vote-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="vote"><?php echo $this->translate('Vote', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $vote = $form->get('vote');
+        echo $this->formInput($vote);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="vote-div">
+        <?php echo $this->translate('Vote', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="adres-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="adres"><?php echo $this->translate('Adres', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $adres = $form->get('adres');
+        echo $this->formInput($adres);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="adres-div">
+        <?php echo $this->translate('Adres', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="url-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="url"><?php echo $this->translate('URL', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $url = $form->get('url');
+        echo $this->formInput($url);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="url-div">
+        <?php echo $this->translate('Url', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="phone-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="phone"><?php echo $this->translate('Phone', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $phone = $form->get('phone');
+        echo $this->formInput($phone);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="phone-div">
+        <?php echo $this->translate('Phone', 'default', $_SESSION['translate']); ?>
+    </div>
+    <?php
+    echo $this->translate($this->formSubmit($form->get('submit')));
+    echo $this->form()->closeTag();
+    ?>
+</div>

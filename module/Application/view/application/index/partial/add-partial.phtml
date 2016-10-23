@@ -1,0 +1,121 @@
+<dialog id="add" class="mdl-dialog" style="z-index: 1">
+    <h4 class="border-bottom"
+        style="text-align: center"><?php echo $this->translate('Add new point', 'default', $_SESSION['translate']); ?></h4>
+    <hr>
+    <?php
+    $form = $this->form;
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+    <div id="name-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="name"><?php echo $this->translate('Name', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $name = $form->get('name');
+        echo $this->formInput($name);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="name-div">
+        <?php echo $this->translate('Nazwa', 'default', $_SESSION['translate']); ?>
+    </div>
+    <?php
+    $lat = $form->get('lat');
+    echo $this->formInput($lat);
+    $lon = $form->get('lon');
+    echo $this->formInput($lon);
+    ?>
+    <div id="tags-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="tags"><?php echo $this->translate('Tags', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $tags = $form->get('tags');
+        echo $this->formInput($tags);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="tags-div">
+        <?php echo $this->translate('Tags', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="adres-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="adres"><?php echo $this->translate('Adres', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $adres = $form->get('adres');
+        echo $this->formInput($adres);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="adres-div">
+        <?php echo $this->translate('Adres', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="url-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="url"><?php echo $this->translate('URL', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $url = $form->get('url');
+        echo $this->formInput($url);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="url-div">
+        <?php echo $this->translate('Url', 'default', $_SESSION['translate']); ?>
+    </div>
+    <div id="phone-div" class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label"
+               for="phone"><?php echo $this->translate('Phone', 'default', $_SESSION['translate']); ?></label>
+        <?php
+        $phone = $form->get('phone');
+        echo $this->formInput($phone);
+        ?>
+    </div>
+    <div class="mdl-tooltip" data-mdl-for="phone-div">
+        <?php echo $this->translate('Phone', 'default', $_SESSION['translate']); ?>
+    </div>
+    <?php
+    echo $this->form()->closeTag();
+    ?>
+    <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent js-send'
+            type='button' style="margin: 2% 5%;
+width: 90%;"><?php echo $this->translate('Send', 'default', $_SESSION['translate']); ?></button>
+    <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary js-close'
+            type='button' style="margin: 2% 5%;
+width: 90%;"><?php echo $this->translate('Close', 'default', $_SESSION['translate']); ?></button>
+</dialog>
+
+<script>
+    $('.js-send').on('click', function () {
+        var name = $('.js-add-name').val();
+        var tags = $('.js-add-tags').val();
+        var adres = $('.js-add-adres').val();
+        var url = $('.js-add-url').val();
+        var phone = $('.js-add-phone').val();
+        $.ajax({
+            url: '<?php echo $this->url('app/addNewPoint'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                name: name,
+                tags: tags,
+                adres: adres,
+                url: url,
+                phone: phone,
+                lat: new_point_lat,
+                lon: new_point_lon,
+                town: {
+                    lat: '<?php echo $this->town['lat']; ?>',
+                    lon: '<?php echo $this->town['lon']; ?>'
+                }
+            },
+            success: function (response) {
+                console.log(response);
+                $.toaster({
+                    priority: 'success',
+                    title: 'Udało się!',
+                    message: 'Dodałeś nową knajpę o nazwie ' + response.name + ' teraz wystarczy czekać na zaakceptowanie przez admina ;)'
+                });
+                dialog.close();
+            }
+        });
+    });
+
+    $('.js-close').on('click', function () {
+        dialog.close();
+    });
+</script>

@@ -1,0 +1,34 @@
+<?php
+$_SESSION['count_in_admin']++;
+echo $this->doctype();
+?>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle($this->translate('Bars', 'default', $_SESSION['translate']) . '-admin')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/pawelcss.css'))
+        ->prependStylesheet($this->basePath('css/material/dialog-polyfill.css'))
+        ->prependStylesheet($this->basePath('css/material/material.min.css')); ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+        ->appendFile($this->basePath('/js/jquery/jquery.min.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery.toaster.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery-ui.js'))
+        ->appendFile($this->basePath('/js/material/material.min.js'))
+        ->appendFile($this->basePath('/js/material/dialog-polyfill.js'))
+        ->appendFile($this->basePath('/js/plupload/plupload-2.1.9/js/plupload.full.min.js')); ?>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<div class="page-content pawel-div-bord"><?php echo $this->content; ?></div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<?php
+echo $this->doctype();
+$_SESSION['count_in_front']++;
+?>
+
+<html lang="pl_PL">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle($this->translate('Bars', 'default', $_SESSION['translate']) . ' ' . $_SESSION['show_locale'])->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/pawelcss.css'))
+        ->prependStylesheet($this->basePath('css/jquery.autocomplete.css'))
+        ->prependStylesheet($this->basePath('css/material/dialog-polyfill.css'))
+        ->prependStylesheet($this->basePath('css/material/material.min.css')); ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+        ->appendFile($this->basePath('/js/jquery/jquery.min.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery.toaster.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery-ui.js'))
+        ->appendFile($this->basePath('/js/jquery/jquery.autocomplete.js'))
+        ->appendFile($this->basePath('/js/material/material.min.js'))
+        ->appendFile($this->basePath('/js/material/dialog-polyfill.js')); ?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.7.22/css/materialdesignicons.min.css">
+</head>
+<body style="background-color: whitesmoke;">
+<div id="dark"></div>
+<div id="load" class="mdl-spinner mdl-js-spinner is-active"></div>
+<a href="<?php echo $this->url('app/translate'); ?>"
+   class="translate mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored js-translate"
+   type="button"><?php echo $_SESSION['translate_echo'] ?></a>
+<div id="blo">
+    <?php echo $this->content; ?>
+</div>
+</body>
+<script>
+
+    $('#map').attr('style', 'min-height: ' + $(document).height() + 'px');
+
+    if ($(window).width() <= 480) {
+        $('.js-translate').addClass('hidden');
+        $('.js-pawel-drawer').attr('style', 'width: 50%');
+        $('.pawel-content').attr('style', 'margin-left: 0% !important');
+    }
+
+    var session = '<?php echo $_SESSION['count_in_front'] ?>';
+
+    console.log('session in: ' + session);
+
+    $(document).ready(function () {
+        $("#dark").fadeOut('normal');
+        $("#load").fadeOut('normal');
+        priority = 'info';
+        if (session == 1) {
+            if ($(window).width() <= 480) {
+            }
+            else {
+                welcomeToast(priority);
+            }
+        }
+    });
+
+    function welcomeToast(priority) {
+        var title = '<?php echo $this->translate('Hello', 'default', $_SESSION['translate']); ?>!';
+        var message = '<?php echo $this->translate('In here you can find anything what you need about any bar', 'default', $_SESSION['translate']); ?>!';
+
+        $.toaster({priority: priority, title: title, message: message});
+    }
+</script>
+</html>
