@@ -132,7 +132,10 @@ class IndexController extends AbstractActionController
 
             if ($loc) {
 
-                $logger->log('User: ' . $this->identity()->getName() . ' szukane: ' . $params, 1);
+                if ($this->identity())
+                    $logger->log('User: ' . $this->identity()->getName() . ' szukane: ' . $params, 0);
+                else
+                    $logger->log('User: ' . $superUser->getName() . ' szukane: ' . $params, 0);
 
                 $viewModel = new ViewModel(array(
                     'points' => $loc,
@@ -151,7 +154,10 @@ class IndexController extends AbstractActionController
                 ));
             } else {
 
-                $logger->log('User: ' . $this->identity()->getName() . ' szukane: ' . $params, 0);
+                if ($this->identity())
+                    $logger->log('User: ' . $this->identity()->getName() . ' szukane: ' . $params, 0);
+                else
+                    $logger->log('User: ' . $superUser->getName() . ' szukane: ' . $params, 0);
 
                 return new JsonModel(array(
                     'message' => array(

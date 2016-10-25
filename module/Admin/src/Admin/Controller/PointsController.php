@@ -83,9 +83,13 @@ class PointsController extends AbstractActionController
     public function uploadFileAction()
     {
         $fileFunctions = new OtherFunctions();
-        $logger = new Logger();
-        $write = new Stream('./logs/points/' . date('d/m/Y') . '.log');
-        $logger->addWriter($write);
+        if ($this->identity()) {
+            $logger = new \Application\Functions\Logger(date('d-m-Y'), $this->identity(), $this->em, ROOT_PATH . '/logs/points', 'logs/points');
+        } else {
+            $superUser = $this->em->getRepository('Application\Entity\User')->findOneByName('superuser');
+            $logger = new \Application\Functions\Logger(date('d-m-Y'), $superUser, $this->em, ROOT_PATH . '/logs/points', 'logs/points');
+        }
+        $logger->log('======================POCZĄTEK DODAWANIA=======================', 1);
         $files = $this->params()->fromFiles();
         $date = date('d.m.Y h:i:s');
         $hash = md5($date . $files['file']['name'] . $files['file']['size']);
@@ -96,8 +100,8 @@ class PointsController extends AbstractActionController
         $result = array();
         if (strpos($files['file']['name'], '.csv')) {
             $handle = fopen(ROOT_PATH . $path, "r");
-            $logger->log(Logger::INFO, '---------------------POCZĄTEK DODAWANIA---------------------');
-            $logger->log(Logger::INFO, 'UserId: ' . $this->identity()->getId());
+            $logger->log('---------------------POCZĄTEK DODAWANIA PUNKTÓW---------------------', 1);
+            $logger->log('UserId: ' . $this->identity()->getId(), 1);
             while (($data = fgetcsv($handle, 100000, ';')) == true) {
                 if ($i == 0) {
                 } else {
@@ -105,11 +109,10 @@ class PointsController extends AbstractActionController
                     if ($validate['error']) {
                         $bad++;
                     } else {
-
                         $local = explode(',', $data[0]);
 
                         $mapParams = $this->em->getRepository('Application\Entity\MapLocalization')->findOneBy(array('nazwa' => $data[1], 'lat' => $local[0], 'lon' => $local[1]));
-                        $localCenter = $this->em->getRepository('Application\Entity\LocalCenter')->find($data[6]);
+                        $localCenter = $this->em->getRepository('Application\Entity\LocalCenter')->findOneByName($data[6]);
 
                         if (!$mapParams)
                             $mapParams = new MapLocalization();
@@ -129,13 +132,13 @@ class PointsController extends AbstractActionController
                         $this->em->flush();
                         $good++;
 
-                        $logger->log(Logger::INFO, 'Dodano punkt o ID: ' . $mapParams->getIdloc() . ' o nazwie: ' . iconv(mb_detect_encoding($data[1]), 'utf-8', ucwords($data[1])));
+                        $logger->log('Dodano punkt o ID: ' . $mapParams->getIdloc() . ' o nazwie: ' . iconv(mb_detect_encoding($data[1]), 'utf-8', ucwords($data[1])), 1);
                     }
                 }
                 $i++;
             }
-            $logger->log(Logger::INFO, '---------------------KONIEC DODAWANIA---------------------');
-
+            $logger->log('---------------------KONIEC DODAWANIA---------------------', 1);
+            $logger->log('---------------------DODAWANIE PLIKU DO BAZY----------------------', 1);
             $file = $this->em->getRepository('Application\Entity\File')->findOneBy(array('name' => $files['file']['name'], 'hash' => $hash));
             if (!$file)
                 $file = new File();
@@ -168,6 +171,8 @@ class PointsController extends AbstractActionController
                 'html_up' => $html_up,
                 'bad' => $bad,
             );
+            $logger->log('----------------------KONIEC DODAWANIA PLUKU DO BAZY------------------------', 1);
+            $logger->log('======================KONIEC DODAWANIA=======================', 1);
         }
         return new JsonModel($result);
     }

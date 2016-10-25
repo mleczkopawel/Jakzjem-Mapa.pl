@@ -26,7 +26,7 @@ class Logger
      */
     public function __construct($date, $user, $em, $path, $parent) {
         $this->logger = new \Zend\Log\Logger();
-        $log = $em->getRepository('Application\Entity\File')->findOneByName($date . '.log');
+        $log = $em->getRepository('Application\Entity\File')->findOneBy(array('name' => $date . '.log', 'parent' => $parent));
         if (!$log) {
             $log = new File();
             $log->setName($date . '.log');
