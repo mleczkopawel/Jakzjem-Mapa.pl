@@ -274,6 +274,14 @@ class IndexController extends AbstractActionController
 
     public function addNewPointAction()
     {
+
+        if ($this->identity()) {
+            $logger = new \Application\Functions\Logger(date('d-m-Y'), $this->identity(), $this->em, ROOT_PATH . '/logs/points', 'logs/points');
+        } else {
+            $superUser = $this->em->getRepository('Application\Entity\User')->findOneByName('superuser');
+            $logger = new \Application\Functions\Logger(date('d-m-Y'), $superUser, $this->em, ROOT_PATH . '/logs/points', 'logs/points');
+        }
+
         $data = array(
             'name' => $this->params()->fromPost('name'),
             'tags' => $this->params()->fromPost('tags'),
@@ -285,6 +293,8 @@ class IndexController extends AbstractActionController
             'town' => $this->params()->fromPost('town'),
         );
         $date = date('d.m.Y h:i:s');
+
+        $logger->log('Prośba o dodanie: ' . $data['name'], 1);
 
         $data['town'] = $this->em->getRepository('Application\Entity\LocalCenter')->findOneBy(array('lat' => $data['town']['lat'], 'lon' => $data['town']['lon']));
 

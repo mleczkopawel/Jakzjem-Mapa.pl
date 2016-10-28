@@ -1,24 +1,46 @@
-<table class="mdl-data-table mdl-js-data-table" style="width: 100%">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th class="mdl-data-table__cell--non-numeric"><?php echo $this->translate('Search name', 'default', $_SESSION['translate']); ?></th>
-        <th><?php echo $this->translate('Count', 'default', $_SESSION['translate']); ?></th>
-    </tr>
-    </thead>
-    <tbody class="js-list-partial">
-    <?php $i = 0;
-    foreach ($this->stats as $stat): ?>
-        <tr>
-            <td><?php echo ++$i; ?></td>
-            <td class="mdl-data-table__cell--non-numeric"><?php echo $stat->getName() ?></td>
-            <td><?php echo $stat->getCount() ?></td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
+<?php foreach ($this->stats as $stat):
+    $name[] = $stat->getName();
+    $count[] = $stat->getCount();
+endforeach; ?>
 
+<canvas id="lineChart" class="lineChart"></canvas>
 
 <script>
+    var names = JSON.parse('<?php echo json_encode($name); ?>');
+    var count = JSON.parse('<?php echo json_encode($count); ?>');
+    const ctx = $('#lineChart');
+
+    var data = {
+        labels: names,
+        datasets: [
+            {
+                label: "Wyniki wyszukiwań",
+                fill: true,
+                lineTension: 0.2,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: count,
+                spanGaps: false
+            }
+        ]
+    };
+
+    myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: data
+    });
     console.log('<?php echo $this->translate('You are in: ', 'default', $_SESSION['translate']); ?>' + 'stats');
 </script>

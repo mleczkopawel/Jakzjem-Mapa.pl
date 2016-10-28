@@ -360,3 +360,7 @@ h4 {
         width: 86.5%;
     }
 }
+.lineChart {
+    width: 400px;
+    height: 400px;
+}

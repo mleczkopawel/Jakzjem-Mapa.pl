@@ -8,7 +8,6 @@
 
 namespace Application\Functions;
 
-
 class Generator
 {
     public function string($len)

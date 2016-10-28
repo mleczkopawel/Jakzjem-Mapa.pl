@@ -8,7 +8,6 @@
 
 namespace Application\Functions;
 
-
 use Application\Entity\File;
 use Zend\Log\Writer\Stream;
 
